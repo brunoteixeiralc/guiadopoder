@@ -1,4 +1,6 @@
-package com.example.guiadopoder;
+package br.com.vector.guiadopoder;
+
+import com.example.guiadopoder.R;
 
 import android.os.Bundle;
 import android.app.Activity;
