@@ -17,8 +17,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import br.com.vector.guiadopoder.adapter.MenuListAdapter;
-import br.com.vector.guiadopoder.fragment.Grupo1;
+import br.com.vector.guiadopoder.adapter.DrawerListAdapter;
+import br.com.vector.guiadopoder.fragment.Estadual;
+import br.com.vector.guiadopoder.fragment.Executivo;
+import br.com.vector.guiadopoder.fragment.Judiciario;
+import br.com.vector.guiadopoder.fragment.Legislativo;
+import br.com.vector.guiadopoder.fragment.MainPage;
 import br.com.vector.guiadopoder.model.DrawerItem;
 import com.example.guiadopoder.R;
 
@@ -29,7 +33,7 @@ public class MainActivity extends ActionBarActivity {
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
-	private MenuListAdapter menuListAdapter;
+	private DrawerListAdapter menuListAdapter;
 	private Fragment fragment;
 	List<DrawerItem> dataList;
 	
@@ -50,7 +54,7 @@ public class MainActivity extends ActionBarActivity {
 		 dataList.add(new DrawerItem("Estadual", R.drawable.ic_refresh));
 		 
 
-		 menuListAdapter = new MenuListAdapter(this, R.layout.drawer_list_item,
+		 menuListAdapter = new DrawerListAdapter(this, R.layout.drawer_list_item,
 					dataList);
 		 
 		 mDrawerList.setAdapter(menuListAdapter);
@@ -75,7 +79,7 @@ public class MainActivity extends ActionBarActivity {
 	        actionBar.setDisplayHomeAsUpEnabled(true);
 	        actionBar.setHomeButtonEnabled(true);
 	        
-	        actionBar.setTitle("Vector - Guia do Poder");
+	        actionBar.setTitle("Vector - Guia Pr‡tico do Poder");
 	        
 	        selectItem(0);
 
@@ -96,11 +100,19 @@ public class MainActivity extends ActionBarActivity {
     	switch (position) {
     	
         case 0:
-        	fragment = new Grupo1();
+        	fragment = new MainPage();
             break;
         case 1:
+        	fragment = new Executivo();
             break;
         case 2:
+        	fragment = new Legislativo();
+            break;
+        case 3:
+        	fragment = new Judiciario();
+            break;
+        case 4:
+        	fragment = new Estadual();
             break;
         default:
             break;

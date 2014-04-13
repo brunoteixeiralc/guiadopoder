@@ -15,14 +15,14 @@ import br.com.vector.guiadopoder.model.DrawerItem;
 
 import com.example.guiadopoder.R;
 
-public class MenuListAdapter extends ArrayAdapter<DrawerItem> {
+public class DrawerListAdapter extends ArrayAdapter<DrawerItem> {
 
 	Context context;
 	List<DrawerItem> drawerItemList;
 	int layoutResID;
 	private View view;
 	
-	public MenuListAdapter(Context context, int layoutResourceID,
+	public DrawerListAdapter(Context context, int layoutResourceID,
 			List<DrawerItem> listItems) {
 		super(context, layoutResourceID, listItems);
 		this.context = context;
