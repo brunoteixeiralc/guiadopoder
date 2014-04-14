@@ -7,5 +7,6 @@
     <string name="drawer_open">Abrir navegação</string>
 	<string name="drawer_close">Fechar navegação</string>
 	<string name="assunto">Assunto</string>
+	<string name="buscar">Buscar</string>
 
 </resources>

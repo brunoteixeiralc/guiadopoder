@@ -1,6 +1,8 @@
 package br.com.vector.guiadopoder.adapter;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import com.example.guiadopoder.R;
 
@@ -19,11 +21,15 @@ public class ListAdapter extends BaseAdapter {
 	private static LayoutInflater inflater = null;
 	private String poder;
 	private View view;
+	private ArrayList<Lista> arraylist;
 	
 	public ListAdapter(Context context, List<Lista> lista,String poder) {
 		this.lista = lista;
 		this.poder = poder;
 		inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		this.arraylist = new ArrayList<Lista>();
+        this.arraylist.addAll(lista);
+		
 	}
 	
 	static class ViewHolder{
@@ -89,6 +95,26 @@ public class ListAdapter extends BaseAdapter {
 		}
 		
 	}
+	
+	// Filter Class
+    public void filter(String charText) {
+        charText = charText.toLowerCase(Locale.getDefault());
+        lista.clear();
+        if (charText.length() == 0) {
+        	lista.addAll(arraylist);
+        }
+        else
+        {
+            for (Lista wp : arraylist)
+            {
+                if (wp.getTexto().toLowerCase(Locale.getDefault()).contains(charText))
+                {
+                	lista.add(wp);
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
     
    
 }

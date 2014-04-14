@@ -1,6 +1,5 @@
 package br.com.vector.guiadopoder;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,10 +12,13 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 import br.com.vector.guiadopoder.adapter.DrawerListAdapter;
 import br.com.vector.guiadopoder.fragment.Estadual;
 import br.com.vector.guiadopoder.fragment.Executivo;
@@ -24,9 +26,8 @@ import br.com.vector.guiadopoder.fragment.Judiciario;
 import br.com.vector.guiadopoder.fragment.Legislativo;
 import br.com.vector.guiadopoder.fragment.MainPage;
 import br.com.vector.guiadopoder.model.DrawerItem;
+
 import com.example.guiadopoder.R;
-
-
 
 public class MainActivity extends ActionBarActivity {
 
@@ -36,6 +37,8 @@ public class MainActivity extends ActionBarActivity {
 	private DrawerListAdapter menuListAdapter;
 	private Fragment fragment;
 	List<DrawerItem> dataList;
+	private ActionBar actionBar;
+	private MenuItem item;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -74,14 +77,19 @@ public class MainActivity extends ActionBarActivity {
 		 mDrawerLayout.setDrawerListener(mDrawerToggle);
 		 mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 		 
-		 final ActionBar actionBar = getSupportActionBar();
-			actionBar.setHomeButtonEnabled(true);
-	        actionBar.setDisplayHomeAsUpEnabled(true);
-	        actionBar.setHomeButtonEnabled(true);
+		 actionBar = getSupportActionBar();
+		 actionBar.setHomeButtonEnabled(true);
+	     actionBar.setDisplayHomeAsUpEnabled(true);
+	     actionBar.setHomeButtonEnabled(true);
 	        
-	        actionBar.setTitle("Vector - Guia Pr‡tico do Poder");
+	     actionBar.setTitle("Guia Pr‡tico do Poder");
 	        
-	        selectItem(0);
+	     selectItem(0);
+	     
+	     if ((getResources().getConfiguration().screenLayout &  Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE) {     
+	    	    Toast.makeText(this, "Large screen",Toast.LENGTH_LONG).show();
+
+	    	}
 
 	}
 	
@@ -102,7 +110,7 @@ public class MainActivity extends ActionBarActivity {
         case 0:
         	fragment = new MainPage();
             break;
-        case 1:
+        case 1:;
         	fragment = new Executivo();
             break;
         case 2:
@@ -140,6 +148,18 @@ public class MainActivity extends ActionBarActivity {
 	        }
 
 	        return super.onOptionsItemSelected(item);
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+	    
+		MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.main, menu);
+	    
+	    item = menu.findItem(R.id.action_search);
+	    item.setVisible(false);
+	    
+	    return super.onCreateOptionsMenu(menu);
 	}
 	
 	
