@@ -26,7 +26,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
 import br.com.vector.guiadopoder.adapter.ListAdapter;
-import br.com.vector.guiadopoder.model.Lista;
+import br.com.vector.guiadopoder.model.Area;
+import br.com.vector.guiadopoder.model.Cargos;
 
 import com.example.guiadopoder.R;
 
@@ -36,7 +37,7 @@ public class Executivo extends Fragment {
 	private View view;
 	private ListView listaView;
 	private ListAdapter adapter;
-	private List<Lista> listTexto;
+	private List<Area> listArea;
 	private ActionBar actionBar;
 	private MenuItem item;
 	private EditText editsearch;
@@ -65,20 +66,43 @@ public class Executivo extends Fragment {
 		});
 		
 		//TODO TEST
-		listTexto = new ArrayList<Lista>();
-		Lista lista = new Lista();
-		lista.setTexto("ExecutivoExecutivoExecutivoExecutivoExecutivoExecutivoExecutivoExecutivo ");
-		listTexto.add(lista);
-
-		Lista lista2 = new Lista();
-		lista2.setTexto("ExecutivoExecutivoExecutivoExecutivo");
-		listTexto.add(lista2);
+		listArea = new ArrayList<Area>();
 		
-		Lista lista3 = new Lista();
-		lista3.setTexto("ExecutivoExecutivo");
-		listTexto.add(lista3);
+		Area area = new Area();
+		area.setNome("Presidência da República");
+		area.setEndereco("Palácio do Planalto - Praça dos Três Poderes - 70.150-900 Brasília/DF");
+		area.setEndWeb("http://www.planalto.gov.br");
+		area.setTelefone("(61) 3411-1221");
+		area.setCargos(new ArrayList<Cargos>());
+		Cargos cargo = new Cargos();
+		cargo.setCargo("Presidenta");
+		area.getCargos().add(cargo);
 		
-		adapter = new ListAdapter(Executivo.this.getActivity(), listTexto,"Executivo");
+		Area area1 = new Area();
+		area1.setNome("Vice Presidência da República");
+		area1.setEndereco("Palácio do Planalto, Anexo II, Térreo 70.083-900 Brasília/DF");
+		area1.setEndWeb("http://www.planalto.gov.br");
+		area1.setTelefone("(61) 3411-1221");
+		area1.setCargos(new ArrayList<Cargos>());
+		Cargos cargo2 = new Cargos();
+		cargo2.setCargo("Vice-Presidente");
+		area1.getCargos().add(cargo2);
+		
+		Area area2 = new Area();
+		area2.setNome("Casa Civil da Presidência da República");
+		area1.setEndereco("Palácio do Planalto, 4 andar, Térreo 70.150-900 Brasília/DF");
+		area2.setEndWeb("http://www.planalto.gov.br");
+		area2.setTelefone("(61) 3411-1221");
+		area2.setCargos(new ArrayList<Cargos>());
+		Cargos cargo3 = new Cargos();
+		cargo3.setCargo("Ministra de Estado");
+		area2.getCargos().add(cargo3);
+		
+		listArea.add(area);
+		listArea.add(area1);
+		listArea.add(area2);
+		
+		adapter = new ListAdapter(Executivo.this.getActivity(), listArea,"Executivo");
 		listaView.setAdapter(adapter);
 		
 		return view;

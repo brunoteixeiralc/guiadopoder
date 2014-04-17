@@ -26,7 +26,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
 import br.com.vector.guiadopoder.adapter.ListAdapter;
-import br.com.vector.guiadopoder.model.Lista;
+import br.com.vector.guiadopoder.model.Area;
+import br.com.vector.guiadopoder.model.Cargos;
 
 import com.example.guiadopoder.R;
 
@@ -36,10 +37,10 @@ public class Judiciario extends Fragment {
 	private View view;
 	private ListView listaView;
 	private ListAdapter adapter;
-	private List<Lista> listTexto;
 	private ActionBar actionBar;
 	private MenuItem item;
 	private EditText editsearch;
+	private List<Area> listArea;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,20 +66,62 @@ public class Judiciario extends Fragment {
 		});
 		
 		//TODO TEST
-		listTexto = new ArrayList<Lista>();
-		Lista lista = new Lista();
-		lista.setTexto("JudiciárioJudiciárioJudiciárioJudiciárioJudiciárioJudiciárioJudiciárioJudiciárioJudiciário");
-		listTexto.add(lista);
+		listArea = new ArrayList<Area>();
+		
+		Area area = new Area();
+		area.setNome("Tribunal de Contas da União - TCU");
+		area.setEndereco("SAFS Quadra 4, Lote 1, Edfício Sede, 70.042-900 Brasília/DF");
+		area.setEndWeb("http://www.tcu.jus.br");
+		area.setTelefone("(61) 3316-7222");
+		area.setCargos(new ArrayList<Cargos>());
+		Cargos cargo = new Cargos();
+		cargo.setCargo("Presidente");
+		Cargos cargo2 = new Cargos();
+		cargo2.setCargo("Vice-Presidente");
+		Cargos cargo3 = new Cargos();
+		cargo3.setCargo("Ministro");
+		area.getCargos().add(cargo);
+		area.getCargos().add(cargo2);
+		area.getCargos().add(cargo3);
+		
+		
+		Area area1 = new Area();
+		area1.setNome("Supremo Tribunal Federal - STF");
+		area1.setEndereco("Praça dos Três Poderes, 70.175-900 Brasília/DF");
+		area1.setEndWeb("http://www.stf.jus.br");
+		area1.setTelefone("(61) 3217-3000");
+		area1.setCargos(new ArrayList<Cargos>());
+		Cargos cargo4 = new Cargos();
+		cargo4.setCargo("Presidente");
+		Cargos cargo5 = new Cargos();
+		cargo5.setCargo("Vice-Presidente");
+		Cargos cargo6 = new Cargos();
+		cargo5.setCargo("Ministro");
+		area1.getCargos().add(cargo4);
+		area1.getCargos().add(cargo5);
+		area1.getCargos().add(cargo6);
+		
+		Area area2 = new Area();
+		area2.setNome("Superior Tribunal da Justiça - STJ");
+		area2.setEndereco("SAFS Quadra 6, Lote 1, Trecho III, 70.095-900 Brasília/DF");
+		area2.setEndWeb("http://www.stf.jus.br");
+		area2.setTelefone("(61) 3319-8000");
+		area2.setCargos(new ArrayList<Cargos>());
+		Cargos cargo7 = new Cargos();
+		cargo7.setCargo("Presidente");
+		Cargos cargo8 = new Cargos();
+		cargo8.setCargo("Vice-Presidente");
+		Cargos cargo9 = new Cargos();
+		cargo9.setCargo("Ministro");
+		area2.getCargos().add(cargo7);
+		area2.getCargos().add(cargo8);
+		area2.getCargos().add(cargo9);
+		
+		listArea.add(area);
+		listArea.add(area1);
+		listArea.add(area2);
 
-		Lista lista2 = new Lista();
-		lista2.setTexto("JudiciárioJudiciárioJudiciárioJudiciário");
-		listTexto.add(lista2);
-		
-		Lista lista3 = new Lista();
-		lista3.setTexto("JudiciárioJudiciário");
-		listTexto.add(lista3);
-		
-		adapter = new ListAdapter(Judiciario.this.getActivity(), listTexto,"Judiciário");
+		adapter = new ListAdapter(Judiciario.this.getActivity(), listArea,"Judiciário");
 		listaView.setAdapter(adapter);
 		
 		return view;

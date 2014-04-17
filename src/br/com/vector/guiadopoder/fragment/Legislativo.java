@@ -26,7 +26,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
 import br.com.vector.guiadopoder.adapter.ListAdapter;
-import br.com.vector.guiadopoder.model.Lista;
+import br.com.vector.guiadopoder.model.Area;
+import br.com.vector.guiadopoder.model.Cargos;
 
 import com.example.guiadopoder.R;
 
@@ -36,10 +37,10 @@ public class Legislativo extends Fragment {
 	private View view;
 	private ListView listaView;
 	private ListAdapter adapter;
-	private List<Lista> listTexto;
 	private ActionBar actionBar;
 	private MenuItem item;
 	private EditText editsearch;
+	private List<Area> listArea;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,20 +66,62 @@ public class Legislativo extends Fragment {
 		});
 		
 		//TODO TEST
-		listTexto = new ArrayList<Lista>();
-		Lista lista = new Lista();
-		lista.setTexto("LegislativoLegislativoLegislativoLegislativoLegislativoLegislativoLegislativoLegislativoLegislativo");
-		listTexto.add(lista);
-
-		Lista lista2 = new Lista();
-		lista2.setTexto("LegislativoLegislativoLegislativoLegislativo");
-		listTexto.add(lista2);
+		listArea = new ArrayList<Area>();
 		
-		Lista lista3 = new Lista();
-		lista3.setTexto("LegislativoLegislativoLegislativo");
-		listTexto.add(lista3);
+		Area area = new Area();
+		area.setNome("Congresso Nacional");
+		area.setEndereco("Palácio do Congresso Nacional, Edifício Principal, Praça dos Três Poderes- 70.160-900 Brasília/DF");
+		area.setEndWeb("http://www.senado.gov.br");
+		area.setTelefone("(61) 3303-4141");
+		area.setCargos(new ArrayList<Cargos>());
+		Cargos cargo = new Cargos();
+		cargo.setCargo("Presidente");
+		Cargos cargo2 = new Cargos();
+		cargo2.setCargo("Primeira Vice-Presidente");
+		Cargos cargo3 = new Cargos();
+		cargo3.setCargo("2A Vice-Presidente");
+		area.getCargos().add(cargo);
+		area.getCargos().add(cargo2);
+		area.getCargos().add(cargo3);
 		
-		adapter = new ListAdapter(Legislativo.this.getActivity(), listTexto,"Legislativo");
+		
+		Area area1 = new Area();
+		area1.setNome("Senado Federal");
+		area1.setEndereco("Palácio do Congresso Nacional, Edifício Principal, Praça dos Três Poderes- 70.165-900 Brasília/DF");
+		area1.setEndWeb("http://www.senado.gov.br");
+		area1.setTelefone("(61) 3303-4141");
+		area1.setCargos(new ArrayList<Cargos>());
+		Cargos cargo4 = new Cargos();
+		cargo4.setCargo("Presidente");
+		Cargos cargo5 = new Cargos();
+		cargo5.setCargo("Primeira Vice-Presidente");
+		Cargos cargo6 = new Cargos();
+		cargo6.setCargo("2A Vice-Presidente");
+		area1.getCargos().add(cargo4);
+		area1.getCargos().add(cargo5);
+		area1.getCargos().add(cargo6);
+		
+		Area area2 = new Area();
+		area2.setNome("Câmara dos Deputados");
+		area2.setEndereco("Palácio do Congresso Nacional, Edifício Principal, Praça dos Três Poderes- 70.165-900 Brasília/DF");
+		area2.setEndWeb("http://www.senado.gov.br");
+		area2.setTelefone("(61) 3216-0000");
+		area2.setCargos(new ArrayList<Cargos>());
+		Cargos cargo7 = new Cargos();
+		cargo7.setCargo("Presidente");
+		Cargos cargo8 = new Cargos();
+		cargo8.setCargo("Primeira Vice-Presidente");
+		Cargos cargo9 = new Cargos();
+		cargo9.setCargo("2A Vice-Presidente");
+		area2.getCargos().add(cargo7);
+		area2.getCargos().add(cargo8);
+		area2.getCargos().add(cargo9);
+		
+		listArea.add(area);
+		listArea.add(area1);
+		listArea.add(area2);
+		
+		adapter = new ListAdapter(Legislativo.this.getActivity(), listArea,"Legislativo");
 		listaView.setAdapter(adapter);
 		
 		return view;

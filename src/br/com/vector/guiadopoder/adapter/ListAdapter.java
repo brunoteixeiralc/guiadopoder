@@ -4,30 +4,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import com.example.guiadopoder.R;
-
-import br.com.vector.guiadopoder.model.Lista;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import br.com.vector.guiadopoder.model.Area;
+
+import com.example.guiadopoder.R;
 
 public class ListAdapter extends BaseAdapter {
 
-	private List<Lista> lista;
+	private List<Area> lista;
 	private static LayoutInflater inflater = null;
 	private String poder;
 	private View view;
-	private ArrayList<Lista> arraylist;
+	private ArrayList<Area> arraylist;
 	
-	public ListAdapter(Context context, List<Lista> lista,String poder) {
+	public ListAdapter(Context context, List<Area> lista,String poder) {
 		this.lista = lista;
 		this.poder = poder;
 		inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		this.arraylist = new ArrayList<Lista>();
+		this.arraylist = new ArrayList<Area>();
         this.arraylist.addAll(lista);
 		
 	}
@@ -75,7 +74,7 @@ public class ListAdapter extends BaseAdapter {
         	holder = (ViewHolder) view.getTag();
         }
        
-		 holder.texto.setText(lista.get(position).getTexto());
+		 holder.texto.setText(lista.get(position).getNome());
 		 holder.line.setBackgroundColor(lineColor(poder));
 		 
         return view;
@@ -105,11 +104,11 @@ public class ListAdapter extends BaseAdapter {
         }
         else
         {
-            for (Lista wp : arraylist)
+            for (Area ar : arraylist)
             {
-                if (wp.getTexto().toLowerCase(Locale.getDefault()).contains(charText))
+                if (ar.getNome().toLowerCase(Locale.getDefault()).contains(charText))
                 {
-                	lista.add(wp);
+                	lista.add(ar);
                 }
             }
         }
