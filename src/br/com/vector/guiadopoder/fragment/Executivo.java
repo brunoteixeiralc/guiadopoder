@@ -7,6 +7,7 @@ import java.util.Locale;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.MenuItemCompat.OnActionExpandListener;
 import android.support.v7.app.ActionBar;
@@ -41,6 +42,7 @@ public class Executivo extends Fragment {
 	private ActionBar actionBar;
 	private MenuItem item;
 	private EditText editsearch;
+	private Fragment fragment;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,7 +62,18 @@ public class Executivo extends Fragment {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				
-			
+				Area area = (Area) parent.getAdapter().getItem(position);
+				area.setPoder(actionBar.getTitle().toString());
+				
+				Bundle bundle = new Bundle();
+				bundle.putSerializable("area", area);
+				fragment = new Cargo();
+				fragment.setArguments(bundle);
+			 	FragmentTransaction ft = Executivo.this.getActivity().getSupportFragmentManager().beginTransaction();
+			    ft.replace(R.id.content_frame, fragment);
+			    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+			    ft.addToBackStack(null);
+			    ft.commit(); 
 			}
 			
 		});

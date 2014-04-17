@@ -131,7 +131,7 @@ public class MainActivity extends ActionBarActivity {
 		    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 		    ft.replace(R.id.content_frame, fragment);
 		    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-		    //ft.addToBackStack(null);
+		   // ft.addToBackStack(null);
 		    ft.commit(); 
 		
 			mDrawerList.setItemChecked(position, true);

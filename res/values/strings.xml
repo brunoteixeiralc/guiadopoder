@@ -8,5 +8,6 @@
 	<string name="drawer_close">Fechar navegação</string>
 	<string name="assunto">Assunto</string>
 	<string name="buscar">Buscar</string>
+	<string name="endereco">Endereco</string>
 
 </resources>

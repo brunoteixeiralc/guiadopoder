@@ -21,6 +21,8 @@ public class Area implements Serializable{
 
 	private List<Cargos> cargos;
 	
+	private String poder;
+	
 	public String getEndereco() {
 		return endereco;
 	}
@@ -67,6 +69,14 @@ public class Area implements Serializable{
 
 	public void setEndWeb(String endWeb) {
 		this.endWeb = endWeb;
+	}
+
+	public String getPoder() {
+		return poder;
+	}
+
+	public void setPoder(String poder) {
+		this.poder = poder;
 	}
 		
 
