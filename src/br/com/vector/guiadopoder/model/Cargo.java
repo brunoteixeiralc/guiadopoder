@@ -4,13 +4,16 @@ import java.io.Serializable;
 import java.util.List;
 
 
-public class Cargos implements Serializable{
+
+public class Cargo implements Serializable{
 
 	private static final long serialVersionUID = 4011667352070275133L;
 
 	private int id;
 	
 	private String cargo;
+	
+	private String poder;
 	
 	private List<Funcionario> funcionarios;
 
@@ -37,6 +40,15 @@ public class Cargos implements Serializable{
 	public void setFuncionarios(List<Funcionario> funcionarios) {
 		this.funcionarios = funcionarios;
 	}
+
+	public String getPoder() {
+		return poder;
+	}
+
+	public void setPoder(String poder) {
+		this.poder = poder;
+	}
+
 	
 	
 }

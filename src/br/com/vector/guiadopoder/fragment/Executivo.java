@@ -28,7 +28,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import br.com.vector.guiadopoder.adapter.ListAdapter;
 import br.com.vector.guiadopoder.model.Area;
-import br.com.vector.guiadopoder.model.Cargos;
+import br.com.vector.guiadopoder.model.Cargo;
 
 import com.example.guiadopoder.R;
 
@@ -67,7 +67,7 @@ public class Executivo extends Fragment {
 				
 				Bundle bundle = new Bundle();
 				bundle.putSerializable("area", area);
-				fragment = new Cargo();
+				fragment = new br.com.vector.guiadopoder.fragment.Cargo();
 				fragment.setArguments(bundle);
 			 	FragmentTransaction ft = Executivo.this.getActivity().getSupportFragmentManager().beginTransaction();
 			    ft.replace(R.id.content_frame, fragment);
@@ -86,8 +86,8 @@ public class Executivo extends Fragment {
 		area.setEndereco("Palácio do Planalto - Praça dos Três Poderes - 70.150-900 Brasília/DF");
 		area.setEndWeb("http://www.planalto.gov.br");
 		area.setTelefone("(61) 3411-1221");
-		area.setCargos(new ArrayList<Cargos>());
-		Cargos cargo = new Cargos();
+		area.setCargos(new ArrayList<Cargo>());
+		Cargo cargo = new Cargo();
 		cargo.setCargo("Presidenta");
 		area.getCargos().add(cargo);
 		
@@ -96,18 +96,18 @@ public class Executivo extends Fragment {
 		area1.setEndereco("Palácio do Planalto, Anexo II, Térreo 70.083-900 Brasília/DF");
 		area1.setEndWeb("http://www.planalto.gov.br");
 		area1.setTelefone("(61) 3411-1221");
-		area1.setCargos(new ArrayList<Cargos>());
-		Cargos cargo2 = new Cargos();
+		area1.setCargos(new ArrayList<Cargo>());
+		Cargo cargo2 = new Cargo();
 		cargo2.setCargo("Vice-Presidente");
 		area1.getCargos().add(cargo2);
 		
 		Area area2 = new Area();
 		area2.setNome("Casa Civil da Presidência da República");
-		area1.setEndereco("Palácio do Planalto, 4 andar, Térreo 70.150-900 Brasília/DF");
+		area2.setEndereco("Palácio do Planalto, 4 andar, Térreo 70.150-900 Brasília/DF");
 		area2.setEndWeb("http://www.planalto.gov.br");
 		area2.setTelefone("(61) 3411-1221");
-		area2.setCargos(new ArrayList<Cargos>());
-		Cargos cargo3 = new Cargos();
+		area2.setCargos(new ArrayList<Cargo>());
+		Cargo cargo3 = new Cargo();
 		cargo3.setCargo("Ministra de Estado");
 		area2.getCargos().add(cargo3);
 		

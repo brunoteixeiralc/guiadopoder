@@ -3,8 +3,11 @@ package br.com.vector.guiadopoder.fragment;
 import java.util.Locale;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.MenuItemCompat.OnActionExpandListener;
 import android.support.v7.app.ActionBar;
@@ -21,8 +24,10 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.TextView;
 import br.com.vector.guiadopoder.adapter.ListAdapterCargo;
 import br.com.vector.guiadopoder.model.Area;
 
@@ -38,6 +43,13 @@ public class Cargo extends Fragment {
 	private ListAdapterCargo adapter;
 	private ListView listaView;
 	private EditText editsearch;
+	private TextView endereco;
+	private LinearLayout llEndereco;
+	private LinearLayout llNumero;
+	private TextView numero;
+	private LinearLayout llSite;
+	private TextView site;
+	private Fragment fragment;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,6 +58,52 @@ public class Cargo extends Fragment {
 		view = inflater.inflate(R.layout.list, container, false);  
 		
 		areaSelecionada = (Area) getArguments().getSerializable("area");
+		
+		llEndereco = (LinearLayout) view.findViewById(R.id.llEndereco);
+		llEndereco.setVisibility(View.VISIBLE);
+		
+		endereco = (TextView) view.findViewById(R.id.endereco);
+		endereco.setText(areaSelecionada.getEndereco());
+		
+		llNumero = (LinearLayout) view.findViewById(R.id.llNumero);
+		llNumero.setVisibility(View.VISIBLE);
+		
+		numero = (TextView) view.findViewById(R.id.numero);
+		numero.setText(areaSelecionada.getTelefone());
+		numero.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				
+				String numero =  areaSelecionada.getTelefone().replace("(", "").replace(")", "");
+				
+				Intent intent = new Intent(Intent.ACTION_CALL);
+				intent.setData(Uri.parse("tel:" + numero));
+				startActivity(intent);
+				
+			}
+		});
+		
+		if(numero.getText().toString().isEmpty()){
+			llNumero.setVisibility(View.GONE);
+		}
+		
+		llSite = (LinearLayout) view.findViewById(R.id.llSite);
+		llSite.setVisibility(View.VISIBLE);
+		
+		site = (TextView) view.findViewById(R.id.site);
+		site.setText(areaSelecionada.getEndWeb());
+		site.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				
+				Uri uri = Uri.parse(areaSelecionada.getEndWeb());
+				Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+				startActivity(intent);
+				
+			}
+		});
 		
 		setHasOptionsMenu(true);
 		
@@ -58,7 +116,19 @@ public class Cargo extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				// TODO Auto-generated method stub
+				
+				br.com.vector.guiadopoder.model.Cargo cargo = (br.com.vector.guiadopoder.model.Cargo) parent.getAdapter().getItem(position);
+				cargo.setPoder(areaSelecionada.getPoder());
+			
+				Bundle bundle = new Bundle();
+				bundle.putSerializable("cargo", cargo);
+				fragment = new Funcionario();
+				fragment.setArguments(bundle);
+			 	FragmentTransaction ft = Cargo.this.getActivity().getSupportFragmentManager().beginTransaction();
+			    ft.replace(R.id.content_frame, fragment);
+			    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+			    ft.addToBackStack(null);
+			    ft.commit(); 
 				
 			}
 			

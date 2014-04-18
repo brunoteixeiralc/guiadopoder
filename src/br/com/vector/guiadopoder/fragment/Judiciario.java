@@ -28,7 +28,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import br.com.vector.guiadopoder.adapter.ListAdapter;
 import br.com.vector.guiadopoder.model.Area;
-import br.com.vector.guiadopoder.model.Cargos;
+import br.com.vector.guiadopoder.model.Cargo;
 
 import com.example.guiadopoder.R;
 
@@ -67,7 +67,7 @@ public class Judiciario extends Fragment {
 				
 				Bundle bundle = new Bundle();
 				bundle.putSerializable("area", area);
-				fragment = new Cargo();
+				fragment = new br.com.vector.guiadopoder.fragment.Cargo();
 				fragment.setArguments(bundle);
 			 	FragmentTransaction ft = Judiciario.this.getActivity().getSupportFragmentManager().beginTransaction();
 			    ft.replace(R.id.content_frame, fragment);
@@ -87,12 +87,12 @@ public class Judiciario extends Fragment {
 		area.setEndereco("SAFS Quadra 4, Lote 1, Edfício Sede, 70.042-900 Brasília/DF");
 		area.setEndWeb("http://www.tcu.jus.br");
 		area.setTelefone("(61) 3316-7222");
-		area.setCargos(new ArrayList<Cargos>());
-		Cargos cargo = new Cargos();
+		area.setCargos(new ArrayList<Cargo>());
+		Cargo cargo = new Cargo();
 		cargo.setCargo("Presidente");
-		Cargos cargo2 = new Cargos();
+		Cargo cargo2 = new Cargo();
 		cargo2.setCargo("Vice-Presidente");
-		Cargos cargo3 = new Cargos();
+		Cargo cargo3 = new Cargo();
 		cargo3.setCargo("Ministro");
 		area.getCargos().add(cargo);
 		area.getCargos().add(cargo2);
@@ -104,13 +104,13 @@ public class Judiciario extends Fragment {
 		area1.setEndereco("Praça dos Três Poderes, 70.175-900 Brasília/DF");
 		area1.setEndWeb("http://www.stf.jus.br");
 		area1.setTelefone("(61) 3217-3000");
-		area1.setCargos(new ArrayList<Cargos>());
-		Cargos cargo4 = new Cargos();
+		area1.setCargos(new ArrayList<Cargo>());
+		Cargo cargo4 = new Cargo();
 		cargo4.setCargo("Presidente");
-		Cargos cargo5 = new Cargos();
+		Cargo cargo5 = new Cargo();
 		cargo5.setCargo("Vice-Presidente");
-		Cargos cargo6 = new Cargos();
-		cargo5.setCargo("Ministro");
+		Cargo cargo6 = new Cargo();
+		cargo6.setCargo("Ministro");
 		area1.getCargos().add(cargo4);
 		area1.getCargos().add(cargo5);
 		area1.getCargos().add(cargo6);
@@ -120,12 +120,12 @@ public class Judiciario extends Fragment {
 		area2.setEndereco("SAFS Quadra 6, Lote 1, Trecho III, 70.095-900 Brasília/DF");
 		area2.setEndWeb("http://www.stf.jus.br");
 		area2.setTelefone("(61) 3319-8000");
-		area2.setCargos(new ArrayList<Cargos>());
-		Cargos cargo7 = new Cargos();
+		area2.setCargos(new ArrayList<Cargo>());
+		Cargo cargo7 = new Cargo();
 		cargo7.setCargo("Presidente");
-		Cargos cargo8 = new Cargos();
+		Cargo cargo8 = new Cargo();
 		cargo8.setCargo("Vice-Presidente");
-		Cargos cargo9 = new Cargos();
+		Cargo cargo9 = new Cargo();
 		cargo9.setCargo("Ministro");
 		area2.getCargos().add(cargo7);
 		area2.getCargos().add(cargo8);

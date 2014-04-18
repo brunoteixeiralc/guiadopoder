@@ -10,23 +10,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import br.com.vector.guiadopoder.model.Cargos;
+import br.com.vector.guiadopoder.model.Cargo;
 
 import com.example.guiadopoder.R;
 
 public class ListAdapterCargo extends BaseAdapter {
 
-	private List<Cargos> lista;
+	private List<Cargo> lista;
 	private static LayoutInflater inflater = null;
 	private String poder;
 	private View view;
-	private ArrayList<Cargos> arraylist;
+	private ArrayList<Cargo> arraylist;
 	
-	public ListAdapterCargo(Context context, List<Cargos> lista,String poder) {
+	public ListAdapterCargo(Context context, List<Cargo> lista,String poder) {
 		this.lista = lista;
 		this.poder = poder;
 		inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		this.arraylist = new ArrayList<Cargos>();
+		this.arraylist = new ArrayList<Cargo>();
         this.arraylist.addAll(lista);
 		
 	}
@@ -104,7 +104,7 @@ public class ListAdapterCargo extends BaseAdapter {
         }
         else
         {
-            for (Cargos ar : arraylist)
+            for (Cargo ar : arraylist)
             {
                 if (ar.getCargo().toLowerCase(Locale.getDefault()).contains(charText))
                 {

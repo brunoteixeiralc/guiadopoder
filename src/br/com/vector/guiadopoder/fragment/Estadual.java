@@ -28,7 +28,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import br.com.vector.guiadopoder.adapter.ListAdapter;
 import br.com.vector.guiadopoder.model.Area;
-import br.com.vector.guiadopoder.model.Cargos;
+import br.com.vector.guiadopoder.model.Cargo;
+import br.com.vector.guiadopoder.model.Funcionario;
 
 import com.example.guiadopoder.R;
 
@@ -67,7 +68,7 @@ public class Estadual extends Fragment {
 				
 					Bundle bundle = new Bundle();
 					bundle.putSerializable("area", area);
-					fragment = new Cargo();
+					fragment = new br.com.vector.guiadopoder.fragment.Cargo();
 					fragment.setArguments(bundle);
 				 	FragmentTransaction ft = Estadual.this.getActivity().getSupportFragmentManager().beginTransaction();
 				    ft.replace(R.id.content_frame, fragment);
@@ -87,13 +88,37 @@ public class Estadual extends Fragment {
 		area.setEndereco("Avenida Brasil, 402, Centro 69.900-100 Rio Branco/AC");
 		area.setEndWeb("http://www.ac.gov.br");
 		area.setTelefone("");
-		area.setCargos(new ArrayList<Cargos>());
-		Cargos cargos = new Cargos();
+		area.setCargos(new ArrayList<Cargo>());
+		Cargo cargos = new Cargo();
 		cargos.setCargo("Governador");
-		Cargos cargos2 = new Cargos();
+		cargos.setFuncionarios(new ArrayList<Funcionario>());
+		Funcionario funcionario = new Funcionario();
+		funcionario.setNome("Sebasti‹o Afonso Viana Macedo Neves");
+		funcionario.setAniversario("09/02");
+		funcionario.setEmail("gabinete.governador@ac.gov.br");
+		funcionario.setFax("3215-2819");
+		funcionario.setTelefones(new ArrayList<String>());
+		funcionario.getTelefones().add("(68)3215-2880");
+		funcionario.getTelefones().add("(68)3215-2812");
+		cargos.getFuncionarios().add(funcionario);
+		
+		Cargo cargos2 = new Cargo();
 		cargos2.setCargo("Vice-Governador");
-		Cargos cargos3 = new Cargos();
+		cargos2.setFuncionarios(new ArrayList<Funcionario>());
+		Funcionario funcionario2 = new Funcionario();
+		funcionario2.setNome("Carlos CŽsar de Messias");
+		funcionario2.setAniversario("05/07");
+		funcionario2.setEmail("vicegovernador@ac.gov.br");
+		funcionario2.setFax("3224-1929");
+		funcionario2.setTelefones(new ArrayList<String>());
+		funcionario2.getTelefones().add("(68)3224-4345");
+		funcionario2.getTelefones().add("(68)3224-3364");
+		funcionario2.getTelefones().add("(68)3224-1602");
+		cargos2.getFuncionarios().add(funcionario);
+		
+		Cargo cargos3 = new Cargo();
 		cargos3.setCargo("Chefe");
+		
 		area.getCargos().add(cargos);
 		area.getCargos().add(cargos2);
 		area.getCargos().add(cargos3);
@@ -104,12 +129,12 @@ public class Estadual extends Fragment {
 		area1.setEndereco("Pal‡cio dos Sententri‹o, Rua General Rondon, 259 - Centro 68.906-130 Macap‡/AP");
 		area1.setEndWeb("http://www.amapa.gov.br");
 		area1.setTelefone("");
-		area1.setCargos(new ArrayList<Cargos>());
-		Cargos cargo4 = new Cargos();
+		area1.setCargos(new ArrayList<Cargo>());
+		Cargo cargo4 = new Cargo();
 		cargo4.setCargo("Governador");
-		Cargos cargos5 = new Cargos();
+		Cargo cargos5 = new Cargo();
 		cargos5.setCargo("Vice-Governadora");
-		Cargos cargos6 = new Cargos();
+		Cargo cargos6 = new Cargo();
 		cargos6.setCargo("Chefe");
 		area1.getCargos().add(cargo4);
 		area1.getCargos().add(cargos5);
@@ -120,12 +145,12 @@ public class Estadual extends Fragment {
 		area2.setEndereco("Av. Brasil, Compensa II 69.036-110 Manaus/AM");
 		area2.setEndWeb("http://www.amazonas.am.gov.br");
 		area2.setTelefone("");
-		area2.setCargos(new ArrayList<Cargos>());
-		Cargos cargo7 = new Cargos();
+		area2.setCargos(new ArrayList<Cargo>());
+		Cargo cargo7 = new Cargo();
 		cargo7.setCargo("Governador");
-		Cargos cargos8 = new Cargos();
+		Cargo cargos8 = new Cargo();
 		cargos8.setCargo("Vice-Governador");
-		Cargos cargos9 = new Cargos();
+		Cargo cargos9 = new Cargo();
 		cargos9.setCargo("Secret‡rio de Estado");
 		area2.getCargos().add(cargo7);
 		area2.getCargos().add(cargos8);

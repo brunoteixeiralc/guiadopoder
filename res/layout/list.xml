@@ -1,17 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:background="#fff">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:gravity="center"
+    android:orientation="vertical" >
+	
+    <LinearLayout
+        android:id="@+id/llEndereco"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal"
+        android:layout_gravity="left"
+        android:visibility="gone"
+        tools:ignore="UseCompoundDrawables" >
+    
+	    <ImageView
+	        android:id="@+id/imgEndereco"
+	        android:layout_width="20dp"
+	        android:layout_height="20dp"
+	        android:src="@drawable/pin"
+	        tools:ignore="ContentDescription"
+	        android:layout_gravity="center"
+	        android:layout_marginRight="5dp"/>
+	
+	    <TextView
+	        android:id="@+id/endereco"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="left"
+	        android:maxLines="3"
+	        android:textSize="16sp"/>
+
+    </LinearLayout>
+    
+     <LinearLayout
+        android:id="@+id/llNumero"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:layout_gravity="left"
+        tools:ignore="UseCompoundDrawables" >
+    
+	    <ImageView
+	        android:id="@+id/imgNumero"
+	        android:layout_width="20dp"
+	        android:layout_height="20dp"
+	        android:src="@drawable/phone"
+	        tools:ignore="ContentDescription"
+	        android:layout_gravity="center"
+	        android:layout_marginRight="5dp"/>
+	
+	    <TextView
+	        android:id="@+id/numero"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="left"
+	        android:maxLines="3"
+	        android:textSize="16sp"/>
+
+    </LinearLayout>
+    
+     <LinearLayout
+        android:id="@+id/llSite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:layout_gravity="left"
+        tools:ignore="UseCompoundDrawables" >
+    
+	    <ImageView
+	        android:id="@+id/imgSite"
+	        android:layout_width="20dp"
+	        android:layout_height="20dp"
+	        android:src="@drawable/globe"
+	        tools:ignore="ContentDescription"
+	        android:layout_gravity="center"
+	        android:layout_marginRight="5dp"/>
+	
+	    <TextView
+	        android:id="@+id/site"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="left"
+	        android:maxLines="3"
+	        android:textSize="16sp"/>
+
+    </LinearLayout>
+    
     
     <ListView
-	        android:id="@+id/list"
-	        android:layout_width="fill_parent"
-	        android:layout_height="fill_parent"
-	        android:divider="#d1d1d1"
-	        android:dividerHeight="1dp"
-	        android:visibility="visible"/> 
-    
- </LinearLayout>
+        android:id="@+id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:divider="#d1d1d1"
+        android:dividerHeight="1dp"
+        android:visibility="visible" />
+
+</LinearLayout>

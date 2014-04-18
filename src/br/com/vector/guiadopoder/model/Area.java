@@ -19,7 +19,7 @@ public class Area implements Serializable{
 	
 	private String telefone;
 
-	private List<Cargos> cargos;
+	private List<Cargo> cargos;
 	
 	private String poder;
 	
@@ -47,11 +47,11 @@ public class Area implements Serializable{
 		this.id = id;
 	}
 
-	public List<Cargos> getCargos() {
+	public List<Cargo> getCargos() {
 		return cargos;
 	}
 
-	public void setCargos(List<Cargos> cargos) {
+	public void setCargos(List<Cargo> cargos) {
 		this.cargos = cargos;
 	}
 

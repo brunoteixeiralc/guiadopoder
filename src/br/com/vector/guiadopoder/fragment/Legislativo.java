@@ -28,7 +28,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import br.com.vector.guiadopoder.adapter.ListAdapter;
 import br.com.vector.guiadopoder.model.Area;
-import br.com.vector.guiadopoder.model.Cargos;
+import br.com.vector.guiadopoder.model.Cargo;
 
 import com.example.guiadopoder.R;
 
@@ -67,7 +67,7 @@ public class Legislativo extends Fragment {
 				
 				Bundle bundle = new Bundle();
 				bundle.putSerializable("area", area);
-				fragment = new Cargo();
+				fragment = new br.com.vector.guiadopoder.fragment.Cargo();
 				fragment.setArguments(bundle);
 			 	FragmentTransaction ft = Legislativo.this.getActivity().getSupportFragmentManager().beginTransaction();
 			    ft.replace(R.id.content_frame, fragment);
@@ -87,12 +87,12 @@ public class Legislativo extends Fragment {
 		area.setEndereco("Palácio do Congresso Nacional, Edifício Principal, Praça dos Três Poderes- 70.160-900 Brasília/DF");
 		area.setEndWeb("http://www.senado.gov.br");
 		area.setTelefone("(61) 3303-4141");
-		area.setCargos(new ArrayList<Cargos>());
-		Cargos cargo = new Cargos();
+		area.setCargos(new ArrayList<Cargo>());
+		Cargo cargo = new Cargo();
 		cargo.setCargo("Presidente");
-		Cargos cargo2 = new Cargos();
+		Cargo cargo2 = new Cargo();
 		cargo2.setCargo("Primeira Vice-Presidente");
-		Cargos cargo3 = new Cargos();
+		Cargo cargo3 = new Cargo();
 		cargo3.setCargo("2A Vice-Presidente");
 		area.getCargos().add(cargo);
 		area.getCargos().add(cargo2);
@@ -104,12 +104,12 @@ public class Legislativo extends Fragment {
 		area1.setEndereco("Palácio do Congresso Nacional, Edifício Principal, Praça dos Três Poderes- 70.165-900 Brasília/DF");
 		area1.setEndWeb("http://www.senado.gov.br");
 		area1.setTelefone("(61) 3303-4141");
-		area1.setCargos(new ArrayList<Cargos>());
-		Cargos cargo4 = new Cargos();
+		area1.setCargos(new ArrayList<Cargo>());
+		Cargo cargo4 = new Cargo();
 		cargo4.setCargo("Presidente");
-		Cargos cargo5 = new Cargos();
+		Cargo cargo5 = new Cargo();
 		cargo5.setCargo("Primeira Vice-Presidente");
-		Cargos cargo6 = new Cargos();
+		Cargo cargo6 = new Cargo();
 		cargo6.setCargo("2A Vice-Presidente");
 		area1.getCargos().add(cargo4);
 		area1.getCargos().add(cargo5);
@@ -120,12 +120,12 @@ public class Legislativo extends Fragment {
 		area2.setEndereco("Palácio do Congresso Nacional, Edifício Principal, Praça dos Três Poderes- 70.165-900 Brasília/DF");
 		area2.setEndWeb("http://www.senado.gov.br");
 		area2.setTelefone("(61) 3216-0000");
-		area2.setCargos(new ArrayList<Cargos>());
-		Cargos cargo7 = new Cargos();
+		area2.setCargos(new ArrayList<Cargo>());
+		Cargo cargo7 = new Cargo();
 		cargo7.setCargo("Presidente");
-		Cargos cargo8 = new Cargos();
+		Cargo cargo8 = new Cargo();
 		cargo8.setCargo("Primeira Vice-Presidente");
-		Cargos cargo9 = new Cargos();
+		Cargo cargo9 = new Cargo();
 		cargo9.setCargo("2A Vice-Presidente");
 		area2.getCargos().add(cargo7);
 		area2.getCargos().add(cargo8);
