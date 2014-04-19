@@ -9,5 +9,6 @@
 	<string name="assunto">Assunto</string>
 	<string name="buscar">Buscar</string>
 	<string name="endereco">Endereco</string>
+	<string name="ok">OK</string>
 
 </resources>

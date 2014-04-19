@@ -74,10 +74,22 @@
 		        android:id="@+id/aniversario"
 		        android:layout_width="fill_parent"
 		        android:layout_height="wrap_content"
-		        android:gravity="left"
 		        android:maxLines="3"
-		        android:textSize="16sp"/>
-	
+		        android:textSize="16sp"
+		        android:textAlignment="center"
+		        android:gravity="center"
+		        android:layout_gravity="center"/>
+			
+		    
+		   	<ImageView
+		        android:id="@+id/imgAlarm"
+		        android:layout_width="30dp"
+		        android:layout_height="30dp"
+		        android:src="@drawable/alarm"
+		        tools:ignore="ContentDescription"
+		        android:layout_gravity="center"
+		        android:layout_marginLeft="12dp"/>
+		    		    
 	    </LinearLayout>
 	    
 	     <LinearLayout

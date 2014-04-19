@@ -1,8 +1,13 @@
 package br.com.vector.guiadopoder.fragment;
 
+import java.util.Calendar;
+
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -12,13 +17,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+import br.com.vector.guiadopoder.MainActivity;
+import br.com.vector.guiadopoder.custom.CustomDialog;
 import br.com.vector.guiadopoder.model.Cargo;
+import br.com.vector.guiadopoder.utils.NotificationUtils;
 
 import com.example.guiadopoder.R;
 
 
+@SuppressLint("HandlerLeak")
 public class Funcionario extends Fragment {
 	
 	private View view;
@@ -30,12 +41,16 @@ public class Funcionario extends Fragment {
 	private TextView telefone;
 	private TextView fax;
 	private TextView email;
+	private ImageView imgAlarm;
 	private View line;
 	private LinearLayout llNome;
 	private LinearLayout llEmail;
 	private LinearLayout llAniversario;
 	private LinearLayout llTelefone;
 	private LinearLayout llFax;
+	
+	private static final int MENSAGEM_SET_ALARME = 1;
+	private Handler handler = new SetAlarmHandle();
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,6 +73,7 @@ public class Funcionario extends Fragment {
 		telefone = (TextView) view.findViewById(R.id.numero);
 		fax = (TextView) view.findViewById(R.id.fax);
 		email = (TextView) view.findViewById(R.id.email);
+		imgAlarm = (ImageView) view.findViewById(R.id.imgAlarm);
 		
 		if(cargoSelecionado.getFuncionarios() != null){
 			
@@ -96,6 +112,29 @@ public class Funcionario extends Fragment {
 					}
 				});
 				
+				imgAlarm.setOnClickListener(new View.OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+							
+						  Calendar c = Calendar.getInstance();
+					      //c.set(c.get(Calendar.YEAR),Integer.parseInt(aniversario.getText().toString().substring(3,5)), Integer.parseInt(aniversario.getText().toString().substring(0,2)));
+					      c.set(c.get(Calendar.YEAR),Calendar.APRIL, 18);
+					      c.set(Calendar.HOUR, 9);
+					      c.set(Calendar.MINUTE, 26);
+					      c.set(Calendar.SECOND, 0);
+					      c.set(Calendar.AM_PM, Calendar.PM);
+					      
+						  Message message = new Message();
+						  message.what = MENSAGEM_SET_ALARME;
+						  handler.sendMessageAtTime(message, System.currentTimeMillis());
+							
+						  CustomDialog dialog = new CustomDialog(Funcionario.this.getActivity(), "Anivers‡rio salvo",cargoSelecionado.getPoder());
+						  dialog.show();
+						
+					}
+				});
+				
 			}
 		}else{
 			
@@ -112,7 +151,26 @@ public class Funcionario extends Fragment {
 		actionBar = ((ActionBarActivity)Funcionario.this.getActivity()).getSupportActionBar();
 		actionBar.setTitle(cargoSelecionado.getCargo());
 		
+		
+		
 		return view;
+	}
+	
+	private class SetAlarmHandle extends Handler{
+		
+		@Override
+		public void handleMessage(Message msg) {
+			
+			switch (msg.what) {
+			case MENSAGEM_SET_ALARME:
+				Toast.makeText(Funcionario.this.getActivity(), "Alarm set", Toast.LENGTH_LONG).show();
+				NotificationUtils.showNotification(Funcionario.this.getActivity(), "Check out realizado!!", MainActivity.class);
+				break;
+
+			default:
+				break;
+			}
+		}
 	}
 	
 	@Override
