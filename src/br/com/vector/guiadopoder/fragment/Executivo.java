@@ -29,6 +29,7 @@ import android.widget.ListView;
 import br.com.vector.guiadopoder.adapter.ListAdapter;
 import br.com.vector.guiadopoder.model.Area;
 import br.com.vector.guiadopoder.model.Cargo;
+import br.com.vector.guiadopoder.model.Funcionario;
 
 import com.example.guiadopoder.R;
 
@@ -90,6 +91,18 @@ public class Executivo extends Fragment {
 		Cargo cargo = new Cargo();
 		cargo.setCargo("Presidenta");
 		area.getCargos().add(cargo);
+		
+		cargo.setFuncionarios(new ArrayList<Funcionario>());
+		Funcionario funcionario = new Funcionario();
+		funcionario.setNome("Dilma Vana Rousseff");
+		funcionario.setAniversario("14/12");
+		funcionario.setEmail("gabinetepessoal@planalto.gov.br");
+		funcionario.setFax("(61)3411-2222");
+		funcionario.setTelefones(new ArrayList<String>());
+		funcionario.getTelefones().add("(68)3411-1200");
+		funcionario.getTelefones().add("(68)3411-1201");
+		cargo.getFuncionarios().add(funcionario);
+		
 		
 		Area area1 = new Area();
 		area1.setNome("Vice Presidência da República");
