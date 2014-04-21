@@ -167,6 +167,7 @@ public class Estadual extends Fragment {
 		return view;
 	}
 	
+	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		
@@ -224,6 +225,7 @@ public class Estadual extends Fragment {
 			}
 	 
 	    };
+	 
 	
 }
 
