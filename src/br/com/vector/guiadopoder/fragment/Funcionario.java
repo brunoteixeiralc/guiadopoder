@@ -1,13 +1,9 @@
 package br.com.vector.guiadopoder.fragment;
 
-import java.util.Calendar;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -19,17 +15,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
-import br.com.vector.guiadopoder.MainActivity;
 import br.com.vector.guiadopoder.custom.CustomDialog;
 import br.com.vector.guiadopoder.model.Cargo;
-import br.com.vector.guiadopoder.utils.NotificationUtils;
 
 import com.example.guiadopoder.R;
 
 
-@SuppressLint("HandlerLeak")
+@SuppressLint("HandlerLeak")@SuppressWarnings("unused")
 public class Funcionario extends Fragment {
 	
 	private View view;
@@ -49,35 +43,39 @@ public class Funcionario extends Fragment {
 	private LinearLayout llTelefone;
 	private LinearLayout llFax;
 	
-	private static final int MENSAGEM_SET_ALARME = 1;
-	private Handler handler = new SetAlarmHandle();
-	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
-		view = inflater.inflate(R.layout.funcionario, container, false);  
+		view = inflater.inflate(R.layout.main_funcionario, container, false);  
 		
 		cargoSelecionado = (Cargo) getArguments().getSerializable("cargo");
-		
-		llNome = (LinearLayout) view.findViewById(R.id.llNome);
-		llAniversario = (LinearLayout) view.findViewById(R.id.llAniversario);
-		llEmail = (LinearLayout) view.findViewById(R.id.llEmail);
-		llFax = (LinearLayout) view.findViewById(R.id.llFax);
-		llTelefone = (LinearLayout) view.findViewById(R.id.llNumero);
-		
-		line = view.findViewById(R.id.line);
-		line.setBackgroundColor(lineColor(cargoSelecionado.getPoder()));
-		nome = (TextView) view.findViewById(R.id.nome);
-		aniversario = (TextView) view.findViewById(R.id.aniversario);
-		telefone = (TextView) view.findViewById(R.id.numero);
-		fax = (TextView) view.findViewById(R.id.fax);
-		email = (TextView) view.findViewById(R.id.email);
-		imgAlarm = (ImageView) view.findViewById(R.id.imgAlarm);
-		
+
 		if(cargoSelecionado.getFuncionarios() != null){
 			
+			ScrollView  mainLayout = (ScrollView) view.findViewById(R.id.mainFuncionario);
+			@SuppressWarnings("static-access")
+			LayoutInflater li =  (LayoutInflater)Funcionario.this.getActivity().getApplicationContext().getSystemService(Funcionario.this.getActivity().LAYOUT_INFLATER_SERVICE);
+			
 			for (final br.com.vector.guiadopoder.model.Funcionario funcionario : cargoSelecionado.getFuncionarios()) {
+				
+				View tempView = li.inflate(R.layout.funcionario, null);
+				
+				llNome = (LinearLayout) tempView.findViewById(R.id.llNome);
+				llAniversario = (LinearLayout) tempView.findViewById(R.id.llAniversario);
+				llEmail = (LinearLayout) tempView.findViewById(R.id.llEmail);
+				llFax = (LinearLayout) tempView.findViewById(R.id.llFax);
+				llTelefone = (LinearLayout) tempView.findViewById(R.id.llNumero);
+				
+				line = tempView.findViewById(R.id.line);
+				line.setBackgroundColor(lineColor(cargoSelecionado.getPoder()));
+				
+				nome = (TextView) tempView.findViewById(R.id.nome);
+				aniversario = (TextView) tempView.findViewById(R.id.aniversario);
+				telefone = (TextView) tempView.findViewById(R.id.numero);
+				fax = (TextView) tempView.findViewById(R.id.fax);
+				email = (TextView) tempView.findViewById(R.id.email);
+				imgAlarm = (ImageView) tempView.findViewById(R.id.imgAlarm);
 				
 				nome.setText(funcionario.getNome());
 				aniversario.setText(funcionario.getAniversario());
@@ -117,33 +115,15 @@ public class Funcionario extends Fragment {
 					@Override
 					public void onClick(View v) {
 							
-						  Calendar c = Calendar.getInstance();
-					      //c.set(c.get(Calendar.YEAR),Integer.parseInt(aniversario.getText().toString().substring(3,5)), Integer.parseInt(aniversario.getText().toString().substring(0,2)));
-					      c.set(c.get(Calendar.YEAR),Calendar.APRIL, 18);
-					      c.set(Calendar.HOUR, 9);
-					      c.set(Calendar.MINUTE, 26);
-					      c.set(Calendar.SECOND, 0);
-					      c.set(Calendar.AM_PM, Calendar.PM);
-					      
-						  Message message = new Message();
-						  message.what = MENSAGEM_SET_ALARME;
-						  handler.sendMessageAtTime(message, System.currentTimeMillis());
-							
 						  CustomDialog dialog = new CustomDialog(Funcionario.this.getActivity(), "Anivers‡rio salvo",cargoSelecionado.getPoder());
 						  dialog.show();
 						
 					}
 				});
 				
+				mainLayout.addView(tempView);
+				
 			}
-		}else{
-			
-			llNome.setVisibility(View.GONE);
-			llAniversario.setVisibility(View.GONE);
-			llEmail.setVisibility(View.GONE);
-			llFax.setVisibility(View.GONE);
-			llTelefone.setVisibility(View.GONE);
-			
 		}
 
 		setHasOptionsMenu(true);
@@ -154,23 +134,6 @@ public class Funcionario extends Fragment {
 		
 		
 		return view;
-	}
-	
-	private class SetAlarmHandle extends Handler{
-		
-		@Override
-		public void handleMessage(Message msg) {
-			
-			switch (msg.what) {
-			case MENSAGEM_SET_ALARME:
-				Toast.makeText(Funcionario.this.getActivity(), "Alarm set", Toast.LENGTH_LONG).show();
-				NotificationUtils.showNotification(Funcionario.this.getActivity(), "Check out realizado!!", MainActivity.class);
-				break;
-
-			default:
-				break;
-			}
-		}
 	}
 	
 	@Override

@@ -67,6 +67,7 @@ public class DrawerListAdapter extends ArrayAdapter<DrawerItem> {
 		DrawerItem dItem = (DrawerItem) this.drawerItemList.get(position);
 		
 		if (dItem.getTitle() != null) {
+			
 			drawerHolder.headerLayout.setVisibility(LinearLayout.VISIBLE);
 			drawerHolder.itemLayout.setVisibility(LinearLayout.INVISIBLE);
 			drawerHolder.title.setText(dItem.getTitle());

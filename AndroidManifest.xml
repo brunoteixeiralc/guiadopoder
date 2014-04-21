@@ -14,7 +14,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/CustomActionBarTheme" >
+        android:theme="@style/CustomActionBarTheme">
         <activity
             android:name="br.com.vector.guiadopoder.SplashScreenActivity"
             android:label="@string/app_name" android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
         
-        <activity android:name="br.com.vector.guiadopoder.MainActivity"/>
+        <activity android:name="br.com.vector.guiadopoder.MainActivity" android:screenOrientation="portrait"/>
         
     </application>
 

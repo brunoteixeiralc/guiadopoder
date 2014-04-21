@@ -114,7 +114,8 @@ public class Estadual extends Fragment {
 		funcionario2.getTelefones().add("(68)3224-4345");
 		funcionario2.getTelefones().add("(68)3224-3364");
 		funcionario2.getTelefones().add("(68)3224-1602");
-		cargos2.getFuncionarios().add(funcionario);
+		
+		cargos2.getFuncionarios().add(funcionario2);
 		
 		Cargo cargos3 = new Cargo();
 		cargos3.setCargo("Chefe");
