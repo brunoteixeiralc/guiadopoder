@@ -26,24 +26,21 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
-import br.com.vector.guiadopoder.adapter.ListAdapter;
-import br.com.vector.guiadopoder.model.Area;
-import br.com.vector.guiadopoder.model.Cargo;
+import br.com.vector.guiadopoder.adapter.ListAdapterFuncionario;
 import br.com.vector.guiadopoder.model.Funcionario;
 
 import com.example.guiadopoder.R;
 
-
-public class Estadual extends Fragment {
+public class BuscarPorNome extends Fragment {
 	
 	private View view;
-	private ListView listaView;
-	private ListAdapter adapter;
 	private ActionBar actionBar;
 	private MenuItem item;
+	private ListAdapterFuncionario adapter;
+	private ListView listaView;
 	private EditText editsearch;
-	private List<Area> listArea;
 	private Fragment fragment;
+	private List<Funcionario> listFuncionario;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,8 +48,8 @@ public class Estadual extends Fragment {
 		
 		view = inflater.inflate(R.layout.list, container, false); 
 		
-		actionBar = ((ActionBarActivity)Estadual.this.getActivity()).getSupportActionBar();
-		actionBar.setTitle("Poder Estadual");
+		actionBar = ((ActionBarActivity)BuscarPorNome.this.getActivity()).getSupportActionBar();
+		actionBar.setTitle("Buscar por nome");
 		
 		setHasOptionsMenu(true);
 		
@@ -63,14 +60,13 @@ public class Estadual extends Fragment {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 					
-					Area area = (Area) parent.getAdapter().getItem(position);
-					area.setPoder(actionBar.getTitle().toString());
+					Funcionario funcionario = (Funcionario) parent.getAdapter().getItem(position);
 				
 					Bundle bundle = new Bundle();
-					bundle.putSerializable("area", area);
-					fragment = new br.com.vector.guiadopoder.fragment.Cargo();
+					bundle.putSerializable("funcionario", funcionario);
+					fragment = new br.com.vector.guiadopoder.fragment.Funcionario();
 					fragment.setArguments(bundle);
-				 	FragmentTransaction ft = Estadual.this.getActivity().getSupportFragmentManager().beginTransaction();
+				 	FragmentTransaction ft = BuscarPorNome.this.getActivity().getSupportFragmentManager().beginTransaction();
 				    ft.replace(R.id.content_frame, fragment);
 				    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 				    ft.addToBackStack(null);
@@ -81,91 +77,55 @@ public class Estadual extends Fragment {
 		});
 		
 		//TODO TEST
-		listArea = new ArrayList<Area>();
+		listFuncionario = new ArrayList<Funcionario>();
 		
-		Area area = new Area();
-		area.setNome("Governadoria do estado do Acre - AC");
-		area.setEndereco("Avenida Brasil, 402, Centro 69.900-100 Rio Branco/AC");
-		area.setEndWeb("http://www.ac.gov.br");
-		area.setTelefone("");
-		area.setCargos(new ArrayList<Cargo>());
-		Cargo cargos = new Cargo();
-		cargos.setCargo("Governador");
-		cargos.setFuncionarios(new ArrayList<Funcionario>());
 		Funcionario funcionario = new Funcionario();
-		funcionario.setNome("Sebasti‹o Afonso Viana Macedo Neves");
-		funcionario.setAniversario("09/02");
-		funcionario.setEmail("gabinete.governador@ac.gov.br");
-		funcionario.setFax("3215-2819");
+		funcionario.setNome("Vera Zaverucha");
+		funcionario.setAniversario("19/08");
+		funcionario.setEmail("vera.zaverucha@ancine.gov.br");
+		funcionario.setFax("(21)3037-6095");
 		funcionario.setTelefones(new ArrayList<String>());
-		funcionario.getTelefones().add("(68)3215-2880");
-		funcionario.getTelefones().add("(68)3215-2812");
-		funcionario.setPoder("Poder Estadual");
-		cargos.getFuncionarios().add(funcionario);
+		funcionario.getTelefones().add("(21)3037-6330");
+		funcionario.setPoder("Poder Executivo");
 		
-		Cargo cargos2 = new Cargo();
-		cargos2.setCargo("Vice-Governador");
-		cargos2.setFuncionarios(new ArrayList<Funcionario>());
 		Funcionario funcionario2 = new Funcionario();
-		funcionario2.setNome("Carlos CŽsar de Messias");
-		funcionario2.setAniversario("05/07");
-		funcionario2.setEmail("vicegovernador@ac.gov.br");
-		funcionario2.setFax("3224-1929");
+		funcionario2.setNome("Cristovam Buarque");
+		funcionario2.setAniversario("20/02");
+		funcionario2.setEmail("cristovam@senador.gov.br");
+		funcionario2.setFax("(61)3303-2874");
 		funcionario2.setTelefones(new ArrayList<String>());
-		funcionario2.getTelefones().add("(68)3224-4345");
-		funcionario2.getTelefones().add("(68)3224-3364");
-		funcionario2.getTelefones().add("(68)3224-1602");
-		funcionario2.setPoder("Poder Estadual");
+		funcionario2.getTelefones().add("(61)3303-2281");
+		funcionario2.setPoder("Poder Legislativo");
 		
-		cargos2.getFuncionarios().add(funcionario2);
+		Funcionario funcionario3 = new Funcionario();
+		funcionario3.setNome("Ministro Carlos Ayres Britto");
+		funcionario3.setAniversario("18/11");
+		funcionario3.setEmail("sergio.mendes@stf.jus.br");
+		funcionario3.setFax("");
+		funcionario3.setTelefones(new ArrayList<String>());
+		funcionario3.getTelefones().add("(61)3217-4311");
+		funcionario3.getTelefones().add("(61)3217-4312");
+		funcionario3.setPoder("Poder Judici‡rio");
 		
-		Cargo cargos3 = new Cargo();
-		cargos3.setCargo("Chefe");
+
+		Funcionario funcionario4 = new Funcionario();
+		funcionario4.setNome("Pedro Marcos Lopes");
+		funcionario4.setAniversario("13/09");
+		funcionario4.setEmail("pedrolopes.df@governo.se.gov.br");
+		funcionario4.setFax("(61)3325-2556");
+		funcionario4.setTelefones(new ArrayList<String>());
+		funcionario4.getTelefones().add("(61)3424-9400");
+		funcionario4.getTelefones().add("(61)3424-9404");
+		funcionario4.setPoder("Poder Estadual");
 		
-		area.getCargos().add(cargos);
-		area.getCargos().add(cargos2);
-		area.getCargos().add(cargos3);
+		listFuncionario.add(funcionario);
+		listFuncionario.add(funcionario2);
+		listFuncionario.add(funcionario3);
+		listFuncionario.add(funcionario4);
 		
-		
-		Area area1 = new Area();
-		area1.setNome("Governadoria do estado do Amap‡ - AP");
-		area1.setEndereco("Pal‡cio dos Sententri‹o, Rua General Rondon, 259 - Centro 68.906-130 Macap‡/AP");
-		area1.setEndWeb("http://www.amapa.gov.br");
-		area1.setTelefone("");
-		area1.setCargos(new ArrayList<Cargo>());
-		Cargo cargo4 = new Cargo();
-		cargo4.setCargo("Governador");
-		Cargo cargos5 = new Cargo();
-		cargos5.setCargo("Vice-Governadora");
-		Cargo cargos6 = new Cargo();
-		cargos6.setCargo("Chefe");
-		area1.getCargos().add(cargo4);
-		area1.getCargos().add(cargos5);
-		area1.getCargos().add(cargos6);
-		
-		Area area2 = new Area();
-		area2.setNome("Governadoria do estado do Amazonas - AM");
-		area2.setEndereco("Av. Brasil, Compensa II 69.036-110 Manaus/AM");
-		area2.setEndWeb("http://www.amazonas.am.gov.br");
-		area2.setTelefone("");
-		area2.setCargos(new ArrayList<Cargo>());
-		Cargo cargo7 = new Cargo();
-		cargo7.setCargo("Governador");
-		Cargo cargos8 = new Cargo();
-		cargos8.setCargo("Vice-Governador");
-		Cargo cargos9 = new Cargo();
-		cargos9.setCargo("Secret‡rio de Estado");
-		area2.getCargos().add(cargo7);
-		area2.getCargos().add(cargos8);
-		area2.getCargos().add(cargos9);
-		
-		listArea.add(area);
-		listArea.add(area1);
-		listArea.add(area2);
-		
-		adapter = new ListAdapter(Estadual.this.getActivity(), listArea,"Estadual");
+		adapter = new ListAdapterFuncionario(BuscarPorNome.this.getActivity(), listFuncionario);
 		listaView.setAdapter(adapter);
-		
+	
 		return view;
 	}
 	
@@ -195,7 +155,7 @@ public class Estadual extends Fragment {
 		        @Override
 		        public boolean onMenuItemActionExpand(MenuItem item) {
 		        	editsearch.requestFocus();
-		            InputMethodManager imm = (InputMethodManager) Estadual.this.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+		            InputMethodManager imm = (InputMethodManager) BuscarPorNome.this.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 		            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 		            return true;  
 		        }
@@ -227,7 +187,5 @@ public class Estadual extends Fragment {
 			}
 	 
 	    };
-	 
-	
 }
 

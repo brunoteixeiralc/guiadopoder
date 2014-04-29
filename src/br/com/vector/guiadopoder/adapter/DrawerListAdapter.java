@@ -46,8 +46,12 @@ public class DrawerListAdapter extends ArrayAdapter<DrawerItem> {
 			drawerHolder.ItemName = (TextView) view
 					.findViewById(R.id.drawer_itemName);
 			drawerHolder.icon = (ImageView) view.findViewById(R.id.drawer_icon);
+			
+			drawerHolder.searchIcon = (ImageView) view.findViewById(R.id.drawer_icon_search);
 
 			drawerHolder.title = (TextView) view.findViewById(R.id.drawerTitle);
+			
+			drawerHolder.searchTitle = (TextView) view.findViewById(R.id.drawer_txt_search);
 			
 			drawerHolder.lineColor = (View) view.findViewById(R.id.line_color);
 
@@ -55,6 +59,8 @@ public class DrawerListAdapter extends ArrayAdapter<DrawerItem> {
 					.findViewById(R.id.headerLayout);
 			drawerHolder.itemLayout = (LinearLayout) view
 					.findViewById(R.id.itemLayout);
+			drawerHolder.searchLayout = (LinearLayout) view
+					.findViewById(R.id.llSearch);
 
 			view.setTag(drawerHolder);
 
@@ -70,12 +76,24 @@ public class DrawerListAdapter extends ArrayAdapter<DrawerItem> {
 			
 			drawerHolder.headerLayout.setVisibility(LinearLayout.VISIBLE);
 			drawerHolder.itemLayout.setVisibility(LinearLayout.INVISIBLE);
+			drawerHolder.searchLayout.setVisibility(LinearLayout.INVISIBLE);
 			drawerHolder.title.setText(dItem.getTitle());
 
-		} else {
+		}else if(dItem.getSearchText() != null){
+			
+			drawerHolder.headerLayout.setVisibility(LinearLayout.INVISIBLE);
+			drawerHolder.itemLayout.setVisibility(LinearLayout.INVISIBLE);
+			drawerHolder.searchLayout.setVisibility(LinearLayout.VISIBLE);
+			
+			drawerHolder.searchIcon.setImageDrawable(view.getResources().getDrawable(dItem.getImgResID()));
+			drawerHolder.searchTitle.setText(dItem.getSearchText());
+			
+			
+		}else {
 			
 			drawerHolder.headerLayout.setVisibility(LinearLayout.INVISIBLE);
 			drawerHolder.itemLayout.setVisibility(LinearLayout.VISIBLE);
+			drawerHolder.searchLayout.setVisibility(LinearLayout.INVISIBLE);
 
 			drawerHolder.icon.setImageDrawable(view.getResources().getDrawable(
 					dItem.getImgResID()));
@@ -88,9 +106,9 @@ public class DrawerListAdapter extends ArrayAdapter<DrawerItem> {
 	}
 	
 	private static class DrawerItemHolder {
-		TextView ItemName, title;
-		ImageView icon;
-		LinearLayout headerLayout, itemLayout;
+		TextView ItemName, title, searchTitle;
+		ImageView icon,searchIcon;
+		LinearLayout headerLayout, itemLayout,searchLayout;
 		View lineColor;
 	}
 	

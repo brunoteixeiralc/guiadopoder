@@ -4,6 +4,7 @@ public class DrawerItem {
 
 	String ItemName;
 	String title;
+	private String searchText;
 	int imgResID;
 
 	public DrawerItem(String itemName, int imgResID) {
@@ -14,6 +15,11 @@ public class DrawerItem {
 	public DrawerItem(String title) {
 		this(null, 0);
 		this.title = title;
+	}
+	
+	public DrawerItem(int imgResID,String searchText){
+		this.searchText = searchText;
+		this.imgResID = imgResID;
 	}
 
 	public String getItemName() {
@@ -38,5 +44,13 @@ public class DrawerItem {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public String getSearchText() {
+		return searchText;
+	}
+
+	public void setSearchText(String searchText) {
+		this.searchText = searchText;
 	}
 }

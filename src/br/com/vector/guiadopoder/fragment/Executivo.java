@@ -101,6 +101,7 @@ public class Executivo extends Fragment {
 		funcionario.setTelefones(new ArrayList<String>());
 		funcionario.getTelefones().add("(68)3411-1200");
 		funcionario.getTelefones().add("(68)3411-1201");
+		funcionario.setPoder("Poder Executivo");
 		cargo.getFuncionarios().add(funcionario);
 		
 		

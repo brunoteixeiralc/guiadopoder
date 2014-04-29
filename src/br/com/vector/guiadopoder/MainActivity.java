@@ -18,8 +18,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 import br.com.vector.guiadopoder.adapter.DrawerListAdapter;
+import br.com.vector.guiadopoder.fragment.BuscarPorNome;
 import br.com.vector.guiadopoder.fragment.Estadual;
 import br.com.vector.guiadopoder.fragment.Executivo;
 import br.com.vector.guiadopoder.fragment.Judiciario;
@@ -55,6 +55,7 @@ public class MainActivity extends ActionBarActivity {
 		 dataList.add(new DrawerItem("Legislativo", R.drawable.ic_refresh));
 		 dataList.add(new DrawerItem("Judici‡rio", R.drawable.ic_refresh));
 		 dataList.add(new DrawerItem("Estadual", R.drawable.ic_refresh));
+		 dataList.add(new DrawerItem(R.drawable.search, "Filtrar por nome"));
 		 
 
 		 menuListAdapter = new DrawerListAdapter(this, R.layout.drawer_list_item,
@@ -86,10 +87,7 @@ public class MainActivity extends ActionBarActivity {
 	        
 	     selectItem(0);
 	     
-	     if ((getResources().getConfiguration().screenLayout &  Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE) {     
-	    	    Toast.makeText(this, "Large screen",Toast.LENGTH_LONG).show();
-
-	    	}
+	     mDrawerLayout.openDrawer(mDrawerList);
 
 	}
 	
@@ -121,6 +119,9 @@ public class MainActivity extends ActionBarActivity {
             break;
         case 4:
         	fragment = new Estadual();
+            break;
+        case 5:
+        	fragment = new BuscarPorNome();
             break;
         default:
             break;

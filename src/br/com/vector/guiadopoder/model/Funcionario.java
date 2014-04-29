@@ -20,6 +20,8 @@ public class Funcionario implements Serializable{
 	private String fax;
 	
 	private List<String> telefones;
+	
+	private String poder;
 
 	public int getId() {
 		return id;
@@ -67,6 +69,14 @@ public class Funcionario implements Serializable{
 
 	public void setTelefones(List<String> telefones) {
 		this.telefones = telefones;
+	}
+
+	public String getPoder() {
+		return poder;
+	}
+
+	public void setPoder(String poder) {
+		this.poder = poder;
 	}
 	
 	
