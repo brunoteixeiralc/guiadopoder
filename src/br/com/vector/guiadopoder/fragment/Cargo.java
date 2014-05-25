@@ -11,8 +11,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.MenuItemCompat.OnActionExpandListener;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar.LayoutParams;
+import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -23,13 +23,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
 import br.com.vector.guiadopoder.adapter.ListAdapterCargo;
-import br.com.vector.guiadopoder.model.Area;
+import br.com.vector.guiadopoder.model.Orgao;
 
 import com.example.guiadopoder.R;
 
@@ -39,7 +39,7 @@ public class Cargo extends Fragment {
 	private View view;
 	private ActionBar actionBar;
 	private MenuItem item;
-	private Area areaSelecionada;
+	private Orgao orgaoSelecionado;
 	private ListAdapterCargo adapter;
 	private ListView listaView;
 	private EditText editsearch;
@@ -57,25 +57,25 @@ public class Cargo extends Fragment {
 		
 		view = inflater.inflate(R.layout.list, container, false);  
 		
-		areaSelecionada = (Area) getArguments().getSerializable("area");
+		orgaoSelecionado = (Orgao) getArguments().getSerializable("orgao");
 		
 		llEndereco = (LinearLayout) view.findViewById(R.id.llEndereco);
 		llEndereco.setVisibility(View.VISIBLE);
 		
 		endereco = (TextView) view.findViewById(R.id.endereco);
-		endereco.setText(areaSelecionada.getEndereco());
+		endereco.setText(orgaoSelecionado.getEndereco());
 		
 		llNumero = (LinearLayout) view.findViewById(R.id.llNumero);
 		llNumero.setVisibility(View.VISIBLE);
 		
 		numero = (TextView) view.findViewById(R.id.numero);
-		numero.setText(areaSelecionada.getTelefone());
+		numero.setText(orgaoSelecionado.getTelefone());
 		numero.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				
-				String numero =  areaSelecionada.getTelefone().replace("(", "").replace(")", "");
+				String numero =  orgaoSelecionado.getTelefone().replace("(", "").replace(")", "");
 				
 				Intent intent = new Intent(Intent.ACTION_CALL);
 				intent.setData(Uri.parse("tel:" + numero));
@@ -92,13 +92,13 @@ public class Cargo extends Fragment {
 		llSite.setVisibility(View.VISIBLE);
 		
 		site = (TextView) view.findViewById(R.id.site);
-		site.setText(areaSelecionada.getEndWeb());
+		site.setText(orgaoSelecionado.getSite());
 		site.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				
-				Uri uri = Uri.parse(areaSelecionada.getEndWeb());
+				Uri uri = Uri.parse(orgaoSelecionado.getSite());
 				Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 				startActivity(intent);
 				
@@ -108,7 +108,7 @@ public class Cargo extends Fragment {
 		setHasOptionsMenu(true);
 		
 		actionBar = ((ActionBarActivity)Cargo.this.getActivity()).getSupportActionBar();
-		actionBar.setTitle(areaSelecionada.getNome());
+		actionBar.setTitle(orgaoSelecionado.getNome());
 		
 		listaView = (ListView) view.findViewById(R.id.list);
 		listaView.setOnItemClickListener(new OnItemClickListener() {
@@ -117,12 +117,12 @@ public class Cargo extends Fragment {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				
-				br.com.vector.guiadopoder.model.Cargo cargo = (br.com.vector.guiadopoder.model.Cargo) parent.getAdapter().getItem(position);
-				cargo.setPoder(areaSelecionada.getPoder());
+				br.com.vector.guiadopoder.model.Cargo cargoSelecionado = (br.com.vector.guiadopoder.model.Cargo) parent.getAdapter().getItem(position);
+				cargoSelecionado.setPoder(orgaoSelecionado.getPoder());
 			
 				Bundle bundle = new Bundle();
-				bundle.putSerializable("cargo", cargo);
-				fragment = new Funcionario();
+				bundle.putSerializable("cargo", cargoSelecionado);
+				fragment = new FuncionarioList();
 				fragment.setArguments(bundle);
 			 	FragmentTransaction ft = Cargo.this.getActivity().getSupportFragmentManager().beginTransaction();
 			    ft.replace(R.id.content_frame, fragment);
@@ -134,7 +134,7 @@ public class Cargo extends Fragment {
 			
 		});
 		
-		adapter = new ListAdapterCargo(Cargo.this.getActivity(), areaSelecionada.getCargos(),areaSelecionada.getPoder());
+		adapter = new ListAdapterCargo(Cargo.this.getActivity(), orgaoSelecionado.getCargos(),orgaoSelecionado.getPoder().getCor());
 		listaView.setAdapter(adapter);
 		
 		return view;

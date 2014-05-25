@@ -22,7 +22,7 @@ public class MainPage extends Fragment {
 		view = inflater.inflate(R.layout.main_page, container,false);
 		
 		actionBar = ((ActionBarActivity)MainPage.this.getActivity()).getSupportActionBar();
-		actionBar.setTitle("Guia Prático do Poder");
+		actionBar.setTitle("Guia Pr√°tico do Poder");
 		
 		return view;
 	}

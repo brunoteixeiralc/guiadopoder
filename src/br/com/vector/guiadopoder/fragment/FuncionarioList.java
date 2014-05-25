@@ -1,7 +1,5 @@
 package br.com.vector.guiadopoder.fragment;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 import android.content.Context;
@@ -26,23 +24,23 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
-import br.com.vector.guiadopoder.adapter.ListAdapter;
-import br.com.vector.guiadopoder.model.Area;
+import br.com.vector.guiadopoder.adapter.ListAdapterFuncionario;
 import br.com.vector.guiadopoder.model.Cargo;
+import br.com.vector.guiadopoder.model.Funcionario;
 
 import com.example.guiadopoder.R;
 
 
-public class Legislativo extends Fragment {
+public class FuncionarioList extends Fragment {
 	
 	private View view;
-	private ListView listaView;
-	private ListAdapter adapter;
 	private ActionBar actionBar;
 	private MenuItem item;
+	private ListAdapterFuncionario adapter;
+	private ListView listaView;
 	private EditText editsearch;
-	private List<Area> listArea;
 	private Fragment fragment;
+	private br.com.vector.guiadopoder.model.Cargo cargoSelecionado;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,10 +48,12 @@ public class Legislativo extends Fragment {
 		
 		view = inflater.inflate(R.layout.list, container, false);  
 		
+		cargoSelecionado = (Cargo) getArguments().get("cargo");
+		
 		setHasOptionsMenu(true);
 		
-		actionBar = ((ActionBarActivity)Legislativo.this.getActivity()).getSupportActionBar();
-		actionBar.setTitle("Poder Legislativo");
+		actionBar = ((ActionBarActivity)FuncionarioList.this.getActivity()).getSupportActionBar();
+		actionBar.setTitle(cargoSelecionado.getNome());
 		
 		listaView = (ListView) view.findViewById(R.id.list);
 		listaView.setOnItemClickListener(new OnItemClickListener() {
@@ -62,83 +62,31 @@ public class Legislativo extends Fragment {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				
-				Area area = (Area) parent.getAdapter().getItem(position);
-				area.setPoder(actionBar.getTitle().toString());
+				Funcionario funcionarioSelecionado = (Funcionario) parent.getAdapter().getItem(position);
+				funcionarioSelecionado.setPoder(cargoSelecionado.getPoder());
 				
 				Bundle bundle = new Bundle();
-				bundle.putSerializable("area", area);
-				fragment = new br.com.vector.guiadopoder.fragment.Cargo();
+				bundle.putSerializable("funcionario", funcionarioSelecionado);
+				fragment = new br.com.vector.guiadopoder.fragment.Funcionario();
 				fragment.setArguments(bundle);
-			 	FragmentTransaction ft = Legislativo.this.getActivity().getSupportFragmentManager().beginTransaction();
+			 	FragmentTransaction ft = FuncionarioList.this.getActivity().getSupportFragmentManager().beginTransaction();
 			    ft.replace(R.id.content_frame, fragment);
 			    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 			    ft.addToBackStack(null);
 			    ft.commit(); 
-			
+		
 			}
 			
 		});
 		
-		//TODO TEST
-		listArea = new ArrayList<Area>();
-		
-		Area area = new Area();
-		area.setNome("Congresso Nacional");
-		area.setEndereco("Palácio do Congresso Nacional, Edifício Principal, Praça dos Três Poderes- 70.160-900 Brasília/DF");
-		area.setEndWeb("http://www.senado.gov.br");
-		area.setTelefone("(61) 3303-4141");
-		area.setCargos(new ArrayList<Cargo>());
-		Cargo cargo = new Cargo();
-		cargo.setCargo("Presidente");
-		Cargo cargo2 = new Cargo();
-		cargo2.setCargo("Primeira Vice-Presidente");
-		Cargo cargo3 = new Cargo();
-		cargo3.setCargo("2A Vice-Presidente");
-		area.getCargos().add(cargo);
-		area.getCargos().add(cargo2);
-		area.getCargos().add(cargo3);
-		
-		
-		Area area1 = new Area();
-		area1.setNome("Senado Federal");
-		area1.setEndereco("Palácio do Congresso Nacional, Edifício Principal, Praça dos Três Poderes- 70.165-900 Brasília/DF");
-		area1.setEndWeb("http://www.senado.gov.br");
-		area1.setTelefone("(61) 3303-4141");
-		area1.setCargos(new ArrayList<Cargo>());
-		Cargo cargo4 = new Cargo();
-		cargo4.setCargo("Presidente");
-		Cargo cargo5 = new Cargo();
-		cargo5.setCargo("Primeira Vice-Presidente");
-		Cargo cargo6 = new Cargo();
-		cargo6.setCargo("2A Vice-Presidente");
-		area1.getCargos().add(cargo4);
-		area1.getCargos().add(cargo5);
-		area1.getCargos().add(cargo6);
-		
-		Area area2 = new Area();
-		area2.setNome("Câmara dos Deputados");
-		area2.setEndereco("Palácio do Congresso Nacional, Edifício Principal, Praça dos Três Poderes- 70.165-900 Brasília/DF");
-		area2.setEndWeb("http://www.senado.gov.br");
-		area2.setTelefone("(61) 3216-0000");
-		area2.setCargos(new ArrayList<Cargo>());
-		Cargo cargo7 = new Cargo();
-		cargo7.setCargo("Presidente");
-		Cargo cargo8 = new Cargo();
-		cargo8.setCargo("Primeira Vice-Presidente");
-		Cargo cargo9 = new Cargo();
-		cargo9.setCargo("2A Vice-Presidente");
-		area2.getCargos().add(cargo7);
-		area2.getCargos().add(cargo8);
-		area2.getCargos().add(cargo9);
-		
-		listArea.add(area);
-		listArea.add(area1);
-		listArea.add(area2);
-		
-		adapter = new ListAdapter(Legislativo.this.getActivity(), listArea,"Legislativo");
-		listaView.setAdapter(adapter);
+		if(cargoSelecionado.getFuncionarios() != null && cargoSelecionado.getFuncionarios().size() > 0){
+			adapter = new ListAdapterFuncionario(FuncionarioList.this.getActivity(), cargoSelecionado.getFuncionarios(), cargoSelecionado.getPoder().getCor());
+			listaView.setAdapter(adapter);
+		}
 		
 		return view;
+		
+		
 	}
 	
 	@Override
@@ -166,7 +114,7 @@ public class Legislativo extends Fragment {
 		        @Override
 		        public boolean onMenuItemActionExpand(MenuItem item) {
 		        	editsearch.requestFocus();
-		            InputMethodManager imm = (InputMethodManager) Legislativo.this.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+		            InputMethodManager imm = (InputMethodManager) FuncionarioList.this.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 		            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 		            return true;  
 		        }

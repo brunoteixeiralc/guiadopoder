@@ -3,7 +3,9 @@ package br.com.vector.guiadopoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
@@ -20,12 +22,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import br.com.vector.guiadopoder.adapter.DrawerListAdapter;
 import br.com.vector.guiadopoder.fragment.BuscarPorNome;
-import br.com.vector.guiadopoder.fragment.Estadual;
-import br.com.vector.guiadopoder.fragment.Executivo;
-import br.com.vector.guiadopoder.fragment.Judiciario;
-import br.com.vector.guiadopoder.fragment.Legislativo;
 import br.com.vector.guiadopoder.fragment.MainPage;
+import br.com.vector.guiadopoder.fragment.Setor;
 import br.com.vector.guiadopoder.model.DrawerItem;
+import br.com.vector.guiadopoder.model.Funcionario;
+import br.com.vector.guiadopoder.model.Poder;
 
 import com.example.guiadopoder.R;
 
@@ -39,23 +40,36 @@ public class MainActivity extends ActionBarActivity {
 	List<DrawerItem> dataList;
 	private ActionBar actionBar;
 	private MenuItem item;
+	private ArrayList<Poder> poderes;
+	private Poder executivo,legislativo,judiciario,estadual;
+	private ArrayList<Funcionario> funcionarios;
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-	   
+		
+		poderes = new ArrayList<Poder>();
+		poderes = (ArrayList<Poder>) this.getIntent().getSerializableExtra("listVector");
+		
+		funcionarios = new ArrayList<Funcionario>();
+		funcionarios = (ArrayList<Funcionario>) this.getIntent().getSerializableExtra("listVectorFuncionarios");
+		
+		validarPoder(poderes);
+		
 		 dataList = new ArrayList<DrawerItem>();
 		 mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
 		 mDrawerList = (ListView)findViewById(R.id.left_drawer);
 		 mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 		
 		 dataList.add(new DrawerItem("Poderes")); 
-		 dataList.add(new DrawerItem("Executivo", R.drawable.ic_refresh));
-		 dataList.add(new DrawerItem("Legislativo", R.drawable.ic_refresh));
-		 dataList.add(new DrawerItem("Judiciário", R.drawable.ic_refresh));
-		 dataList.add(new DrawerItem("Estadual", R.drawable.ic_refresh));
+		 dataList.add(new DrawerItem("Executivo", R.drawable.ic_refresh,executivo.getCor()));
+		 dataList.add(new DrawerItem("Legislativo", R.drawable.ic_refresh,legislativo.getCor()));
+		 dataList.add(new DrawerItem("Judici√°rio", R.drawable.ic_refresh,judiciario.getCor()));
+		 dataList.add(new DrawerItem("Estadual", R.drawable.ic_refresh,estadual.getCor()));
 		 dataList.add(new DrawerItem(R.drawable.search, "Filtrar por nome"));
+		 dataList.add(new DrawerItem(R.drawable.logo_vector_about));
 		 
 
 		 menuListAdapter = new DrawerListAdapter(this, R.layout.drawer_list_item,
@@ -83,7 +97,7 @@ public class MainActivity extends ActionBarActivity {
 	     actionBar.setDisplayHomeAsUpEnabled(true);
 	     actionBar.setHomeButtonEnabled(true);
 	        
-	     actionBar.setTitle("Guia Prático do Poder");
+	     actionBar.setTitle("Guia Pr√°tico do Poder");
 	        
 	     selectItem(0);
 	     
@@ -102,26 +116,41 @@ public class MainActivity extends ActionBarActivity {
 	private void selectItem(int position) {
 		
 		fragment = null;
-        
+        Bundle bundle = new Bundle();
     	switch (position) {
     	
         case 0:
         	fragment = new MainPage();
             break;
-        case 1:;
-        	fragment = new Executivo();
+        case 1:
+        	bundle.putSerializable("poder", executivo);
+        	fragment = new Setor();
+        	fragment.setArguments(bundle);
             break;
         case 2:
-        	fragment = new Legislativo();
+        	bundle.putSerializable("poder", legislativo);
+        	fragment = new Setor();
+        	fragment.setArguments(bundle);
             break;
         case 3:
-        	fragment = new Judiciario();
+        	bundle.putSerializable("poder", judiciario);
+        	fragment = new Setor();
+        	fragment.setArguments(bundle);
             break;
         case 4:
-        	fragment = new Estadual();
+        	bundle.putSerializable("poder", estadual);
+        	fragment = new Setor();
+        	fragment.setArguments(bundle);
             break;
         case 5:
+        	bundle.putSerializable("funcionarios", funcionarios);
         	fragment = new BuscarPorNome();
+        	fragment.setArguments(bundle);
+            break;
+        case 6:
+        	Uri uri = Uri.parse("http://vectorrelgov.com.br/");
+			Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+			startActivity(intent);
             break;
         default:
             break;
@@ -163,7 +192,6 @@ public class MainActivity extends ActionBarActivity {
 	    return super.onCreateOptionsMenu(menu);
 	}
 	
-	
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
@@ -179,6 +207,22 @@ public class MainActivity extends ActionBarActivity {
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
+	}
+	
+	private void validarPoder(List<Poder> poderes){
+		
+		for (Poder poder : poderes) {
+			if(poder.getNome().trim().equalsIgnoreCase("Executivo")){
+				executivo = poder;
+			}else if(poder.getNome().trim().equals("Legislativo")){
+				legislativo = poder;
+			}else if(poder.getNome().trim().equalsIgnoreCase("Estadual")){
+				estadual = poder;
+			}else{
+				judiciario = poder;
+			}
+		}
+		
 	}
 
 }

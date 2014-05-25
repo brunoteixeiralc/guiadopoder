@@ -1,6 +1,5 @@
 package br.com.vector.guiadopoder.fragment;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -26,7 +25,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
-import br.com.vector.guiadopoder.adapter.ListAdapterFuncionario;
+import br.com.vector.guiadopoder.adapter.ListAdapterFuncionarioBuscar;
 import br.com.vector.guiadopoder.model.Funcionario;
 
 import com.example.guiadopoder.R;
@@ -36,17 +35,20 @@ public class BuscarPorNome extends Fragment {
 	private View view;
 	private ActionBar actionBar;
 	private MenuItem item;
-	private ListAdapterFuncionario adapter;
+	private ListAdapterFuncionarioBuscar adapter;
 	private ListView listaView;
 	private EditText editsearch;
 	private Fragment fragment;
 	private List<Funcionario> listFuncionario;
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
 		view = inflater.inflate(R.layout.list, container, false); 
+		
+		listFuncionario = (List<Funcionario>) getArguments().get("funcionarios");
 		
 		actionBar = ((ActionBarActivity)BuscarPorNome.this.getActivity()).getSupportActionBar();
 		actionBar.setTitle("Buscar por nome");
@@ -75,55 +77,8 @@ public class BuscarPorNome extends Fragment {
 			}
 			
 		});
-		
-		//TODO TEST
-		listFuncionario = new ArrayList<Funcionario>();
-		
-		Funcionario funcionario = new Funcionario();
-		funcionario.setNome("Vera Zaverucha");
-		funcionario.setAniversario("19/08");
-		funcionario.setEmail("vera.zaverucha@ancine.gov.br");
-		funcionario.setFax("(21)3037-6095");
-		funcionario.setTelefones(new ArrayList<String>());
-		funcionario.getTelefones().add("(21)3037-6330");
-		funcionario.setPoder("Poder Executivo");
-		
-		Funcionario funcionario2 = new Funcionario();
-		funcionario2.setNome("Cristovam Buarque");
-		funcionario2.setAniversario("20/02");
-		funcionario2.setEmail("cristovam@senador.gov.br");
-		funcionario2.setFax("(61)3303-2874");
-		funcionario2.setTelefones(new ArrayList<String>());
-		funcionario2.getTelefones().add("(61)3303-2281");
-		funcionario2.setPoder("Poder Legislativo");
-		
-		Funcionario funcionario3 = new Funcionario();
-		funcionario3.setNome("Ministro Carlos Ayres Britto");
-		funcionario3.setAniversario("18/11");
-		funcionario3.setEmail("sergio.mendes@stf.jus.br");
-		funcionario3.setFax("");
-		funcionario3.setTelefones(new ArrayList<String>());
-		funcionario3.getTelefones().add("(61)3217-4311");
-		funcionario3.getTelefones().add("(61)3217-4312");
-		funcionario3.setPoder("Poder Judici‡rio");
-		
 
-		Funcionario funcionario4 = new Funcionario();
-		funcionario4.setNome("Pedro Marcos Lopes");
-		funcionario4.setAniversario("13/09");
-		funcionario4.setEmail("pedrolopes.df@governo.se.gov.br");
-		funcionario4.setFax("(61)3325-2556");
-		funcionario4.setTelefones(new ArrayList<String>());
-		funcionario4.getTelefones().add("(61)3424-9400");
-		funcionario4.getTelefones().add("(61)3424-9404");
-		funcionario4.setPoder("Poder Estadual");
-		
-		listFuncionario.add(funcionario);
-		listFuncionario.add(funcionario2);
-		listFuncionario.add(funcionario3);
-		listFuncionario.add(funcionario4);
-		
-		adapter = new ListAdapterFuncionario(BuscarPorNome.this.getActivity(), listFuncionario);
+		adapter = new ListAdapterFuncionarioBuscar(BuscarPorNome.this.getActivity(), listFuncionario);
 		listaView.setAdapter(adapter);
 	
 		return view;

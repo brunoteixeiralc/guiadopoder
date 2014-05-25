@@ -2,16 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#ffffff">
 	
     
 	<View 
 	     android:layout_width="10dp"
-	     android:layout_height="200dp"
+	     android:layout_height="250dp"
 	     android:background="@color/blue"
 	     android:id="@+id/line"
 	     android:layout_gravity="left"
-	      android:layout_marginBottom="25dp" />
+	      android:layout_marginBottom="25dp"/>
 	 
 	<LinearLayout
     android:layout_width="match_parent"
@@ -111,7 +112,8 @@
 	        android:layout_marginBottom="8dp"
 	        android:orientation="horizontal"
 	        android:layout_gravity="left"
-	        tools:ignore="UseCompoundDrawables" >
+	        tools:ignore="UseCompoundDrawables" 
+	        android:visibility="gone">
 	    
 		    <ImageView
 		        android:id="@+id/imgNumero"
@@ -133,6 +135,70 @@
 	
 	    </LinearLayout>
 	    
+	      <LinearLayout
+	        android:id="@+id/llNumero2"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="5dp"
+	        android:layout_marginTop="8dp"
+	        android:layout_marginBottom="8dp"
+	        android:orientation="horizontal"
+	        android:layout_gravity="left"
+	        tools:ignore="UseCompoundDrawables"
+	        android:visibility="gone" >
+	    
+		    <ImageView
+		        android:id="@+id/imgNumero2"
+		        android:layout_width="20dp"
+		        android:layout_height="20dp"
+		        android:src="@drawable/phone"
+		        tools:ignore="ContentDescription"
+		        android:layout_gravity="center"
+		        android:layout_marginRight="5dp"/>
+		
+		    <TextView
+		        android:id="@+id/numero2"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:gravity="left"
+		        android:maxLines="3"
+		        android:textSize="16sp"
+		        android:textColor="#000"/>
+	
+	    </LinearLayout>
+	    
+	     <LinearLayout
+	        android:id="@+id/llNumero3"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="5dp"
+	        android:layout_marginTop="8dp"
+	        android:layout_marginBottom="8dp"
+	        android:orientation="horizontal"
+	        android:layout_gravity="left"
+	        tools:ignore="UseCompoundDrawables"
+	        android:visibility="gone" >
+	    
+		    <ImageView
+		        android:id="@+id/imgNumero3"
+		        android:layout_width="20dp"
+		        android:layout_height="20dp"
+		        android:src="@drawable/phone"
+		        tools:ignore="ContentDescription"
+		        android:layout_gravity="center"
+		        android:layout_marginRight="5dp"/>
+		
+		    <TextView
+		        android:id="@+id/numero3"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:gravity="left"
+		        android:maxLines="3"
+		        android:textSize="16sp"
+		        android:textColor="#000"/>
+	
+	    </LinearLayout>
+	    
 	     <LinearLayout
 	        android:id="@+id/llFax"
 	        android:layout_width="wrap_content"
@@ -142,7 +208,8 @@
 	        android:layout_marginBottom="8dp"
 	        android:orientation="horizontal"
 	        android:layout_gravity="left"
-	        tools:ignore="UseCompoundDrawables" >
+	        tools:ignore="UseCompoundDrawables"
+	        android:visibility="gone" >
 	    
 		    <ImageView
 		        android:id="@+id/imgFax"
@@ -192,8 +259,40 @@
 		        android:maxLines="3"
 		        android:textSize="16sp"
 		        android:textColor="#000"/>
-	
-	    </LinearLayout>
+		    
+		   </LinearLayout> 
+		   
+		   <LinearLayout
+	        android:id="@+id/llSala"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="5dp"
+	        android:layout_marginTop="8dp"
+	        android:layout_marginBottom="8dp"
+	        android:orientation="horizontal"
+	        android:layout_gravity="left"
+	        tools:ignore="UseCompoundDrawables"
+	        android:visibility="gone" >
+	    
+		    <ImageView
+		        android:id="@+id/imgSala"
+		        android:layout_width="20dp"
+		        android:layout_height="20dp"
+		        android:src="@drawable/hall"
+		        tools:ignore="ContentDescription"
+		        android:layout_gravity="center"
+		        android:layout_marginRight="5dp"/>
+		
+		    <TextView
+		        android:id="@+id/sala"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:gravity="left"
+		        android:maxLines="3"
+		        android:textSize="16sp"
+		        android:textColor="#000"/>
+		</LinearLayout>
+		
 </LinearLayout>
-     
+
 </LinearLayout>

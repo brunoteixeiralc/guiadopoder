@@ -11,23 +11,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import br.com.vector.guiadopoder.model.Cargo;
+import br.com.vector.guiadopoder.model.Setor;
 
 import com.example.guiadopoder.R;
 
-public class ListAdapterCargo extends BaseAdapter {
+public class ListAdapterSetor extends BaseAdapter {
 
-	private List<Cargo> lista;
+	private List<Setor> lista;
 	private static LayoutInflater inflater = null;
 	private String cor;
 	private View view;
-	private ArrayList<Cargo> arraylist;
+	private ArrayList<Setor> arraylist;
 	
-	public ListAdapterCargo(Context context, List<Cargo> lista,String cor) {
+	public ListAdapterSetor(Context context, List<Setor> lista,String cor) {
 		this.lista = lista;
 		this.cor = cor;
 		inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		this.arraylist = new ArrayList<Cargo>();
+		this.arraylist = new ArrayList<Setor>();
         this.arraylist.addAll(lista);
 		
 	}
@@ -92,11 +92,11 @@ public class ListAdapterCargo extends BaseAdapter {
         }
         else
         {
-            for (Cargo ar : arraylist)
+            for (Setor s : arraylist)
             {
-                if (ar.getNome().toLowerCase(Locale.getDefault()).contains(charText))
+                if (s.getNome().toLowerCase(Locale.getDefault()).contains(charText))
                 {
-                	lista.add(ar);
+                	lista.add(s);
                 }
             }
         }

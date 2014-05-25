@@ -11,23 +11,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import br.com.vector.guiadopoder.model.Cargo;
+import br.com.vector.guiadopoder.model.Funcionario;
 
 import com.example.guiadopoder.R;
 
-public class ListAdapterCargo extends BaseAdapter {
+public class ListAdapterFuncionarioBuscar extends BaseAdapter {
 
-	private List<Cargo> lista;
+	private List<Funcionario> lista;
 	private static LayoutInflater inflater = null;
-	private String cor;
 	private View view;
-	private ArrayList<Cargo> arraylist;
+	private ArrayList<Funcionario> arraylist;
 	
-	public ListAdapterCargo(Context context, List<Cargo> lista,String cor) {
+	public ListAdapterFuncionarioBuscar(Context context, List<Funcionario> lista) {
 		this.lista = lista;
-		this.cor = cor;
 		inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		this.arraylist = new ArrayList<Cargo>();
+		this.arraylist = new ArrayList<Funcionario>();
         this.arraylist.addAll(lista);
 		
 	}
@@ -76,12 +74,11 @@ public class ListAdapterCargo extends BaseAdapter {
         }
        
 		 holder.texto.setText(lista.get(position).getNome());
-		 holder.line.setBackgroundColor(Color.parseColor("#" + this.cor));
+		 holder.line.setBackgroundColor(Color.parseColor("#" + lista.get(position).getPoder().getCor()));
 		 
         return view;
 		
 	}
-	
 	
 	// Filter Class
     public void filter(String charText) {
@@ -92,11 +89,11 @@ public class ListAdapterCargo extends BaseAdapter {
         }
         else
         {
-            for (Cargo ar : arraylist)
+            for (Funcionario f : arraylist)
             {
-                if (ar.getNome().toLowerCase(Locale.getDefault()).contains(charText))
+                if (f.getNome().toLowerCase(Locale.getDefault()).contains(charText))
                 {
-                	lista.add(ar);
+                	lista.add(f);
                 }
             }
         }

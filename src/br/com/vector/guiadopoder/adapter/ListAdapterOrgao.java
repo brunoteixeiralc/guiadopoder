@@ -5,28 +5,29 @@ import java.util.List;
 import java.util.Locale;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import br.com.vector.guiadopoder.model.Area;
+import br.com.vector.guiadopoder.model.Orgao;
 
 import com.example.guiadopoder.R;
 
-public class ListAdapter extends BaseAdapter {
+public class ListAdapterOrgao extends BaseAdapter {
 
-	private List<Area> lista;
+	private List<Orgao> lista;
 	private static LayoutInflater inflater = null;
-	private String poder;
+	private String cor;
 	private View view;
-	private ArrayList<Area> arraylist;
+	private ArrayList<Orgao> arraylist;
 	
-	public ListAdapter(Context context, List<Area> lista,String poder) {
+	public ListAdapterOrgao(Context context, List<Orgao> lista,String cor) {
 		this.lista = lista;
-		this.poder = poder;
+		this.cor = cor;
 		inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		this.arraylist = new ArrayList<Area>();
+		this.arraylist = new ArrayList<Orgao>();
         this.arraylist.addAll(lista);
 		
 	}
@@ -75,26 +76,12 @@ public class ListAdapter extends BaseAdapter {
         }
        
 		 holder.texto.setText(lista.get(position).getNome());
-		 holder.line.setBackgroundColor(lineColor(poder));
+		 holder.line.setBackgroundColor(Color.parseColor("#" + this.cor));
 		 
         return view;
 		
 	}
-	
-	private int lineColor(String poder){
-		
-		if(poder.equalsIgnoreCase("Executivo")){
-			return view.getResources().getColor(R.color.yellow);
-		}else if(poder.equalsIgnoreCase("Legislativo")){
-			return view.getResources().getColor(R.color.green);
-		}else if(poder.equalsIgnoreCase("Judici‡rio")){
-			return view.getResources().getColor(R.color.red);
-		}else{
-			return view.getResources().getColor(R.color.blue_light);
-		}
-		
-	}
-	
+
 	// Filter Class
     public void filter(String charText) {
         charText = charText.toLowerCase(Locale.getDefault());
@@ -104,11 +91,11 @@ public class ListAdapter extends BaseAdapter {
         }
         else
         {
-            for (Area ar : arraylist)
+            for (Orgao og : arraylist)
             {
-                if (ar.getNome().toLowerCase(Locale.getDefault()).contains(charText))
+                if (og.getNome().toLowerCase(Locale.getDefault()).contains(charText))
                 {
-                	lista.add(ar);
+                	lista.add(og);
                 }
             }
         }

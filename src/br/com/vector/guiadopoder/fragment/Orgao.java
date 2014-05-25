@@ -1,7 +1,5 @@
 package br.com.vector.guiadopoder.fragment;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 import android.content.Context;
@@ -26,24 +24,23 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
-import br.com.vector.guiadopoder.adapter.ListAdapter;
-import br.com.vector.guiadopoder.model.Area;
-import br.com.vector.guiadopoder.model.Cargo;
-import br.com.vector.guiadopoder.model.Funcionario;
+import br.com.vector.guiadopoder.adapter.ListAdapterOrgao;
+import br.com.vector.guiadopoder.model.Setor;
 
 import com.example.guiadopoder.R;
 
 
-public class Executivo extends Fragment {
+public class Orgao extends Fragment {
 	
 	private View view;
-	private ListView listaView;
-	private ListAdapter adapter;
-	private List<Area> listArea;
 	private ActionBar actionBar;
 	private MenuItem item;
+	private ListAdapterOrgao adapter;
+	private ListView listaView;
 	private EditText editsearch;
+	private Setor setorSelecionado;
 	private Fragment fragment;
+
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,10 +48,12 @@ public class Executivo extends Fragment {
 		
 		view = inflater.inflate(R.layout.list, container, false);  
 		
+		setorSelecionado = (Setor) getArguments().get("setor");
+		
 		setHasOptionsMenu(true);
 		
-		actionBar = ((ActionBarActivity)Executivo.this.getActivity()).getSupportActionBar();
-		actionBar.setTitle("Poder Executivo");
+		actionBar = ((ActionBarActivity)Orgao.this.getActivity()).getSupportActionBar();
+		actionBar.setTitle(setorSelecionado.getNome());
 		
 		listaView = (ListView) view.findViewById(R.id.list);
 		listaView.setOnItemClickListener(new OnItemClickListener() {
@@ -63,14 +62,14 @@ public class Executivo extends Fragment {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				
-				Area area = (Area) parent.getAdapter().getItem(position);
-				area.setPoder(actionBar.getTitle().toString());
+				br.com.vector.guiadopoder.model.Orgao orgaoSelecionado = (br.com.vector.guiadopoder.model.Orgao) parent.getAdapter().getItem(position);
+				orgaoSelecionado.setPoder(setorSelecionado.getPoder());
 				
 				Bundle bundle = new Bundle();
-				bundle.putSerializable("area", area);
+				bundle.putSerializable("orgao", orgaoSelecionado);
 				fragment = new br.com.vector.guiadopoder.fragment.Cargo();
 				fragment.setArguments(bundle);
-			 	FragmentTransaction ft = Executivo.this.getActivity().getSupportFragmentManager().beginTransaction();
+			 	FragmentTransaction ft = Orgao.this.getActivity().getSupportFragmentManager().beginTransaction();
 			    ft.replace(R.id.content_frame, fragment);
 			    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 			    ft.addToBackStack(null);
@@ -79,58 +78,10 @@ public class Executivo extends Fragment {
 			
 		});
 		
-		//TODO TEST
-		listArea = new ArrayList<Area>();
-		
-		Area area = new Area();
-		area.setNome("Presidência da República");
-		area.setEndereco("Palácio do Planalto - Praça dos Três Poderes - 70.150-900 Brasília/DF");
-		area.setEndWeb("http://www.planalto.gov.br");
-		area.setTelefone("(61) 3411-1221");
-		area.setCargos(new ArrayList<Cargo>());
-		Cargo cargo = new Cargo();
-		cargo.setCargo("Presidenta");
-		area.getCargos().add(cargo);
-		
-		cargo.setFuncionarios(new ArrayList<Funcionario>());
-		Funcionario funcionario = new Funcionario();
-		funcionario.setNome("Dilma Vana Rousseff");
-		funcionario.setAniversario("14/12");
-		funcionario.setEmail("gabinetepessoal@planalto.gov.br");
-		funcionario.setFax("(61)3411-2222");
-		funcionario.setTelefones(new ArrayList<String>());
-		funcionario.getTelefones().add("(68)3411-1200");
-		funcionario.getTelefones().add("(68)3411-1201");
-		funcionario.setPoder("Poder Executivo");
-		cargo.getFuncionarios().add(funcionario);
-		
-		
-		Area area1 = new Area();
-		area1.setNome("Vice Presidência da República");
-		area1.setEndereco("Palácio do Planalto, Anexo II, Térreo 70.083-900 Brasília/DF");
-		area1.setEndWeb("http://www.planalto.gov.br");
-		area1.setTelefone("(61) 3411-1221");
-		area1.setCargos(new ArrayList<Cargo>());
-		Cargo cargo2 = new Cargo();
-		cargo2.setCargo("Vice-Presidente");
-		area1.getCargos().add(cargo2);
-		
-		Area area2 = new Area();
-		area2.setNome("Casa Civil da Presidência da República");
-		area2.setEndereco("Palácio do Planalto, 4 andar, Térreo 70.150-900 Brasília/DF");
-		area2.setEndWeb("http://www.planalto.gov.br");
-		area2.setTelefone("(61) 3411-1221");
-		area2.setCargos(new ArrayList<Cargo>());
-		Cargo cargo3 = new Cargo();
-		cargo3.setCargo("Ministra de Estado");
-		area2.getCargos().add(cargo3);
-		
-		listArea.add(area);
-		listArea.add(area1);
-		listArea.add(area2);
-		
-		adapter = new ListAdapter(Executivo.this.getActivity(), listArea,"Executivo");
-		listaView.setAdapter(adapter);
+		if(setorSelecionado.getOrgaos() != null && setorSelecionado.getOrgaos().size() > 0){
+			adapter = new ListAdapterOrgao(Orgao.this.getActivity(), setorSelecionado.getOrgaos(),setorSelecionado.getPoder().getCor());
+			listaView.setAdapter(adapter);
+		}
 		
 		return view;
 	}
@@ -160,7 +111,7 @@ public class Executivo extends Fragment {
 		        @Override
 		        public boolean onMenuItemActionExpand(MenuItem item) {
 		        	editsearch.requestFocus();
-		            InputMethodManager imm = (InputMethodManager) Executivo.this.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+		            InputMethodManager imm = (InputMethodManager) Orgao.this.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 		            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 		            return true;  
 		        }
@@ -192,6 +143,5 @@ public class Executivo extends Fragment {
 			}
 	 
 	    };
-	
 }
 

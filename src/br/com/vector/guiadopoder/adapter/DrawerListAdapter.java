@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +55,8 @@ public class DrawerListAdapter extends ArrayAdapter<DrawerItem> {
 			drawerHolder.searchTitle = (TextView) view.findViewById(R.id.drawer_txt_search);
 			
 			drawerHolder.lineColor = (View) view.findViewById(R.id.line_color);
+			
+			drawerHolder.logoVectorAbout = (ImageView) view.findViewById(R.id.logo_about);
 
 			drawerHolder.headerLayout = (LinearLayout) view
 					.findViewById(R.id.headerLayout);
@@ -61,6 +64,8 @@ public class DrawerListAdapter extends ArrayAdapter<DrawerItem> {
 					.findViewById(R.id.itemLayout);
 			drawerHolder.searchLayout = (LinearLayout) view
 					.findViewById(R.id.llSearch);
+			drawerHolder.aboutLayout = (LinearLayout) view
+					.findViewById(R.id.llAbout);
 
 			view.setTag(drawerHolder);
 
@@ -75,30 +80,42 @@ public class DrawerListAdapter extends ArrayAdapter<DrawerItem> {
 		if (dItem.getTitle() != null) {
 			
 			drawerHolder.headerLayout.setVisibility(LinearLayout.VISIBLE);
-			drawerHolder.itemLayout.setVisibility(LinearLayout.INVISIBLE);
-			drawerHolder.searchLayout.setVisibility(LinearLayout.INVISIBLE);
+			drawerHolder.itemLayout.setVisibility(LinearLayout.GONE);
+			drawerHolder.searchLayout.setVisibility(LinearLayout.GONE);
+			drawerHolder.aboutLayout.setVisibility(LinearLayout.GONE);
 			drawerHolder.title.setText(dItem.getTitle());
 
 		}else if(dItem.getSearchText() != null){
 			
-			drawerHolder.headerLayout.setVisibility(LinearLayout.INVISIBLE);
-			drawerHolder.itemLayout.setVisibility(LinearLayout.INVISIBLE);
+			drawerHolder.headerLayout.setVisibility(LinearLayout.GONE);
+			drawerHolder.itemLayout.setVisibility(LinearLayout.GONE);
 			drawerHolder.searchLayout.setVisibility(LinearLayout.VISIBLE);
+			drawerHolder.aboutLayout.setVisibility(LinearLayout.GONE);
 			
 			drawerHolder.searchIcon.setImageDrawable(view.getResources().getDrawable(dItem.getImgResID()));
 			drawerHolder.searchTitle.setText(dItem.getSearchText());
+				
+		}else if(dItem.getImgResLogoAbout() != 0){
 			
+			drawerHolder.headerLayout.setVisibility(LinearLayout.GONE);
+			drawerHolder.itemLayout.setVisibility(LinearLayout.GONE);
+			drawerHolder.searchLayout.setVisibility(LinearLayout.GONE);
+			drawerHolder.aboutLayout.setVisibility(LinearLayout.VISIBLE);
+			
+			drawerHolder.logoVectorAbout.setImageDrawable(view.getResources().getDrawable(
+					dItem.getImgResLogoAbout()));
 			
 		}else {
 			
-			drawerHolder.headerLayout.setVisibility(LinearLayout.INVISIBLE);
+			drawerHolder.headerLayout.setVisibility(LinearLayout.GONE);
 			drawerHolder.itemLayout.setVisibility(LinearLayout.VISIBLE);
-			drawerHolder.searchLayout.setVisibility(LinearLayout.INVISIBLE);
+			drawerHolder.searchLayout.setVisibility(LinearLayout.GONE);
+			drawerHolder.aboutLayout.setVisibility(LinearLayout.GONE);
 
 			drawerHolder.icon.setImageDrawable(view.getResources().getDrawable(
 					dItem.getImgResID()));
 			drawerHolder.ItemName.setText(dItem.getItemName());
-			drawerHolder.lineColor.setBackgroundColor(lineColor(dItem.getItemName()));
+			drawerHolder.lineColor.setBackgroundColor(Color.parseColor("#" + dItem.getColor()));
 			
 
 		}
@@ -107,24 +124,24 @@ public class DrawerListAdapter extends ArrayAdapter<DrawerItem> {
 	
 	private static class DrawerItemHolder {
 		TextView ItemName, title, searchTitle;
-		ImageView icon,searchIcon;
-		LinearLayout headerLayout, itemLayout,searchLayout;
+		ImageView icon,searchIcon,logoVectorAbout;
+		LinearLayout headerLayout, itemLayout,searchLayout,aboutLayout;
 		View lineColor;
 	}
 	
-	private int lineColor(String poder){
-		
-		if(poder.equalsIgnoreCase("Executivo")){
-			return view.getResources().getColor(R.color.yellow);
-		}else if(poder.equalsIgnoreCase("Legislativo")){
-			return view.getResources().getColor(R.color.green);
-		}else if(poder.equalsIgnoreCase("Judici‡rio")){
-			return view.getResources().getColor(R.color.red);
-		}else{
-			return view.getResources().getColor(R.color.blue_light);
-		}
-		
-	}
-    
+//	private int lineColor(String poder){
+//		
+//		if(poder.equalsIgnoreCase("Executivo")){
+//			return view.setBackgroundColor(Color.parseColor("#" + poder))
+//		}else if(poder.equalsIgnoreCase("Legislativo")){
+//			return view.getResources().getColor(R.color.green);
+//		}else if(poder.equalsIgnoreCase("Estadual")){
+//			return view.getResources().getColor(R.color.blue_light);
+//		}else{
+//			return view.getResources().getColor(R.color.red);
+//		}
+//		
+//	}
+//    
    
 }

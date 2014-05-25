@@ -1,7 +1,5 @@
 package br.com.vector.guiadopoder.fragment;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 import android.content.Context;
@@ -26,22 +24,21 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
-import br.com.vector.guiadopoder.adapter.ListAdapter;
-import br.com.vector.guiadopoder.model.Area;
-import br.com.vector.guiadopoder.model.Cargo;
+import br.com.vector.guiadopoder.adapter.ListAdapterSetor;
+import br.com.vector.guiadopoder.model.Poder;
 
 import com.example.guiadopoder.R;
 
 
-public class Judiciario extends Fragment {
+public class Setor extends Fragment {
 	
 	private View view;
-	private ListView listaView;
-	private ListAdapter adapter;
 	private ActionBar actionBar;
 	private MenuItem item;
+	private ListAdapterSetor adapter;
+	private ListView listaView;
 	private EditText editsearch;
-	private List<Area> listArea;
+	private Poder poderSelecionado;
 	private Fragment fragment;
 	
 	@Override
@@ -50,10 +47,12 @@ public class Judiciario extends Fragment {
 		
 		view = inflater.inflate(R.layout.list, container, false);  
 		
+		poderSelecionado = (Poder) getArguments().get("poder");
+		
 		setHasOptionsMenu(true);
 		
-		actionBar = ((ActionBarActivity)Judiciario.this.getActivity()).getSupportActionBar();
-		actionBar.setTitle("Poder Judiciário");
+		actionBar = ((ActionBarActivity)Setor.this.getActivity()).getSupportActionBar();
+		actionBar.setTitle(poderSelecionado.getNome());
 		
 		listaView = (ListView) view.findViewById(R.id.list);
 		listaView.setOnItemClickListener(new OnItemClickListener() {
@@ -62,83 +61,31 @@ public class Judiciario extends Fragment {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				
-				Area area = (Area) parent.getAdapter().getItem(position);
-				area.setPoder(actionBar.getTitle().toString());
+				br.com.vector.guiadopoder.model.Setor setorSelecionado = (br.com.vector.guiadopoder.model.Setor) parent.getAdapter().getItem(position);
+				setorSelecionado.setPoder(poderSelecionado);
 				
 				Bundle bundle = new Bundle();
-				bundle.putSerializable("area", area);
-				fragment = new br.com.vector.guiadopoder.fragment.Cargo();
+				bundle.putSerializable("setor", setorSelecionado);
+				fragment = new Orgao();
 				fragment.setArguments(bundle);
-			 	FragmentTransaction ft = Judiciario.this.getActivity().getSupportFragmentManager().beginTransaction();
+			 	FragmentTransaction ft = Setor.this.getActivity().getSupportFragmentManager().beginTransaction();
 			    ft.replace(R.id.content_frame, fragment);
 			    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 			    ft.addToBackStack(null);
 			    ft.commit(); 
-			
+		
 			}
 			
 		});
 		
-		//TODO TEST
-		listArea = new ArrayList<Area>();
-		
-		Area area = new Area();
-		area.setNome("Tribunal de Contas da União - TCU");
-		area.setEndereco("SAFS Quadra 4, Lote 1, Edfício Sede, 70.042-900 Brasília/DF");
-		area.setEndWeb("http://www.tcu.jus.br");
-		area.setTelefone("(61) 3316-7222");
-		area.setCargos(new ArrayList<Cargo>());
-		Cargo cargo = new Cargo();
-		cargo.setCargo("Presidente");
-		Cargo cargo2 = new Cargo();
-		cargo2.setCargo("Vice-Presidente");
-		Cargo cargo3 = new Cargo();
-		cargo3.setCargo("Ministro");
-		area.getCargos().add(cargo);
-		area.getCargos().add(cargo2);
-		area.getCargos().add(cargo3);
-		
-		
-		Area area1 = new Area();
-		area1.setNome("Supremo Tribunal Federal - STF");
-		area1.setEndereco("Praça dos Três Poderes, 70.175-900 Brasília/DF");
-		area1.setEndWeb("http://www.stf.jus.br");
-		area1.setTelefone("(61) 3217-3000");
-		area1.setCargos(new ArrayList<Cargo>());
-		Cargo cargo4 = new Cargo();
-		cargo4.setCargo("Presidente");
-		Cargo cargo5 = new Cargo();
-		cargo5.setCargo("Vice-Presidente");
-		Cargo cargo6 = new Cargo();
-		cargo6.setCargo("Ministro");
-		area1.getCargos().add(cargo4);
-		area1.getCargos().add(cargo5);
-		area1.getCargos().add(cargo6);
-		
-		Area area2 = new Area();
-		area2.setNome("Superior Tribunal da Justiça - STJ");
-		area2.setEndereco("SAFS Quadra 6, Lote 1, Trecho III, 70.095-900 Brasília/DF");
-		area2.setEndWeb("http://www.stf.jus.br");
-		area2.setTelefone("(61) 3319-8000");
-		area2.setCargos(new ArrayList<Cargo>());
-		Cargo cargo7 = new Cargo();
-		cargo7.setCargo("Presidente");
-		Cargo cargo8 = new Cargo();
-		cargo8.setCargo("Vice-Presidente");
-		Cargo cargo9 = new Cargo();
-		cargo9.setCargo("Ministro");
-		area2.getCargos().add(cargo7);
-		area2.getCargos().add(cargo8);
-		area2.getCargos().add(cargo9);
-		
-		listArea.add(area);
-		listArea.add(area1);
-		listArea.add(area2);
-
-		adapter = new ListAdapter(Judiciario.this.getActivity(), listArea,"Judiciário");
-		listaView.setAdapter(adapter);
+		if(poderSelecionado.getSetores() != null && poderSelecionado.getSetores().size() > 0){
+			adapter = new ListAdapterSetor(Setor.this.getActivity(), poderSelecionado.getSetores(), poderSelecionado.getCor());
+			listaView.setAdapter(adapter);
+		}
 		
 		return view;
+		
+		
 	}
 	
 	@Override
@@ -166,7 +113,7 @@ public class Judiciario extends Fragment {
 		        @Override
 		        public boolean onMenuItemActionExpand(MenuItem item) {
 		        	editsearch.requestFocus();
-		            InputMethodManager imm = (InputMethodManager) Judiciario.this.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+		            InputMethodManager imm = (InputMethodManager) Setor.this.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 		            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 		            return true;  
 		        }
@@ -198,6 +145,5 @@ public class Judiciario extends Fragment {
 			}
 	 
 	    };
-	
 }
 

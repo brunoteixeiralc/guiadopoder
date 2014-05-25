@@ -1,10 +1,16 @@
 package br.com.vector.guiadopoder.fragment;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Contacts;
@@ -23,7 +29,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import br.com.vector.guiadopoder.custom.CustomDialog;
 import br.com.vector.guiadopoder.model.Cargo;
-
 import com.example.guiadopoder.R;
 
 
@@ -32,87 +37,132 @@ public class Funcionario extends Fragment {
 	
 	private View view;
 	private ActionBar actionBar;
-	private br.com.vector.guiadopoder.model.Funcionario funcionarioSelecionado;
 	private MenuItem item;
 	private Cargo cargoSelecionado;
 	private TextView nome;
 	private TextView aniversario;
-	private TextView telefone;
+	private TextView telefone1;
+	private TextView telefone2;
+	private TextView telefone3;
 	private TextView fax;
 	private TextView email;
+	private TextView sala;
 	private ImageView imgAlarm;
 	private ImageView imgAdd;
 	private View line;
-	private LinearLayout llNome;
-	private LinearLayout llEmail;
-	private LinearLayout llAniversario;
-	private LinearLayout llTelefone;
+	private LinearLayout llTelefone1;
+	private LinearLayout llTelefone2;
+	private LinearLayout llTelefone3;
 	private LinearLayout llFax;
+	private LinearLayout llSala;
+	private DateTime dt;
+	 private br.com.vector.guiadopoder.notification.ScheduleClient scheduleClient;
+	
 	private List<br.com.vector.guiadopoder.model.Funcionario> funcionarios;
+	private br.com.vector.guiadopoder.model.Funcionario funcionarioSelecionado;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
-		view = inflater.inflate(R.layout.main_funcionario, container, false);  
+		view = inflater.inflate(R.layout.funcionario, container, false);  
+		
+	    // Create a new service client and bind our activity to this service
+        scheduleClient = new br.com.vector.guiadopoder.notification.ScheduleClient(Funcionario.this.getActivity());
+        scheduleClient.doBindService();
+		
+		funcionarioSelecionado = (br.com.vector.guiadopoder.model.Funcionario) getArguments().get("funcionario");
+		
 		funcionarios = new ArrayList<br.com.vector.guiadopoder.model.Funcionario>();
 		
-		if( (Cargo) getArguments().getSerializable("cargo") != null){
-			cargoSelecionado = (Cargo) getArguments().getSerializable("cargo");
-			if(cargoSelecionado.getFuncionarios() != null)
-				funcionarios.addAll(cargoSelecionado.getFuncionarios());
-		}	
-		else{
-			funcionarioSelecionado = (br.com.vector.guiadopoder.model.Funcionario) getArguments().getSerializable("funcionario");
-			funcionarios.add(funcionarioSelecionado);
+		llFax = (LinearLayout) view.findViewById(R.id.llFax);	
+		llTelefone1 = (LinearLayout) view.findViewById(R.id.llNumero);	
+		llTelefone2 = (LinearLayout) view.findViewById(R.id.llNumero2);	
+		llTelefone3 = (LinearLayout) view.findViewById(R.id.llNumero3);	
+		llSala = (LinearLayout) view.findViewById(R.id.llSala);
+		
+		line = view.findViewById(R.id.line);
+		line.setBackgroundColor(Color.parseColor("#" + funcionarioSelecionado.getPoder().getCor()));
+		
+		nome = (TextView) view.findViewById(R.id.nome);
+		aniversario = (TextView) view.findViewById(R.id.aniversario);
+		telefone1 = (TextView) view.findViewById(R.id.numero);
+		telefone2 = (TextView) view.findViewById(R.id.numero2);
+		telefone3 = (TextView) view.findViewById(R.id.numero3);
+		sala = (TextView) view.findViewById(R.id.sala);
+		fax = (TextView) view.findViewById(R.id.fax);
+		email = (TextView) view.findViewById(R.id.email);
+		imgAlarm = (ImageView) view.findViewById(R.id.imgAlarm);
+		imgAdd = (ImageView) view.findViewById(R.id.imgAdd);
+				
+		nome.setText(funcionarioSelecionado.getNome());
+		
+		dt = new DateTime(Long.parseLong(funcionarioSelecionado.getAniversario()));
+		DateTimeFormatter fmt = DateTimeFormat.forPattern("dd/MM");
+		String dataFormatada = dt.toString(fmt);
+		
+		aniversario.setText(dataFormatada);
+		
+		if(funcionarioSelecionado.getTelefone() != null && !funcionarioSelecionado.getTelefone().isEmpty()){
+			llTelefone1.setVisibility(View.VISIBLE);
+			telefone1.setText(funcionarioSelecionado.getTelefone());
+			telefone1.setOnClickListener(new View.OnClickListener() {
+						
+						@Override
+						public void onClick(View v) {
+		
+							String numero = funcionarioSelecionado.getTelefone().replace("(", "").replace(")", "");
+							
+							Intent intent = new Intent(Intent.ACTION_CALL);
+							intent.setData(Uri.parse("tel:" + numero));
+							startActivity(intent);
+							
+						}
+			});
 		}
 		
-		if(funcionarios.size() > 0 || (cargoSelecionado != null && cargoSelecionado.getFuncionarios() != null)){
-			
-			ScrollView  mainLayout = (ScrollView) view.findViewById(R.id.mainFuncionario);
-			@SuppressWarnings("static-access")
-			LayoutInflater li =  (LayoutInflater)Funcionario.this.getActivity().getApplicationContext().getSystemService(Funcionario.this.getActivity().LAYOUT_INFLATER_SERVICE);
-			
-			for (final br.com.vector.guiadopoder.model.Funcionario funcionario : funcionarios) {
-				
-				View tempView = li.inflate(R.layout.funcionario, null);
-				
-				llNome = (LinearLayout) tempView.findViewById(R.id.llNome);
-				llAniversario = (LinearLayout) tempView.findViewById(R.id.llAniversario);
-				llEmail = (LinearLayout) tempView.findViewById(R.id.llEmail);
-				llFax = (LinearLayout) tempView.findViewById(R.id.llFax);
-				llTelefone = (LinearLayout) tempView.findViewById(R.id.llNumero);
-				
-				line = tempView.findViewById(R.id.line);
-				line.setBackgroundColor(lineColor(funcionario.getPoder()));
+		if(funcionarioSelecionado.getTelefone2() != null && !funcionarioSelecionado.getTelefone2().isEmpty()){
+			llTelefone2.setVisibility(View.VISIBLE);
+			telefone2.setText(funcionarioSelecionado.getTelefone2());
+			telefone2.setOnClickListener(new View.OnClickListener() {
+						
+						@Override
+						public void onClick(View v) {
 		
-				nome = (TextView) tempView.findViewById(R.id.nome);
-				aniversario = (TextView) tempView.findViewById(R.id.aniversario);
-				telefone = (TextView) tempView.findViewById(R.id.numero);
-				fax = (TextView) tempView.findViewById(R.id.fax);
-				email = (TextView) tempView.findViewById(R.id.email);
-				imgAlarm = (ImageView) tempView.findViewById(R.id.imgAlarm);
-				imgAdd = (ImageView) tempView.findViewById(R.id.imgAdd);
-				
-				nome.setText(funcionario.getNome());
-				aniversario.setText(funcionario.getAniversario());
-				telefone.setText(funcionario.getTelefones().get(0));
-				telefone.setOnClickListener(new View.OnClickListener() {
-					
-					@Override
-					public void onClick(View v) {
-	
-						String numero = funcionario.getTelefones().get(0).replace("(", "").replace(")", "");
+							String numero = funcionarioSelecionado.getTelefone2().replace("(", "").replace(")", "");
+							
+							Intent intent = new Intent(Intent.ACTION_CALL);
+							intent.setData(Uri.parse("tel:" + numero));
+							startActivity(intent);
+							
+						}
+			});
+		}
+		
+		if(funcionarioSelecionado.getTelefone3() != null && !funcionarioSelecionado.getTelefone3().isEmpty()){
+			llTelefone3.setVisibility(View.VISIBLE);
+			telefone3.setText(funcionarioSelecionado.getTelefone3());
+			telefone3.setOnClickListener(new View.OnClickListener() {
 						
-						Intent intent = new Intent(Intent.ACTION_CALL);
-						intent.setData(Uri.parse("tel:" + numero));
-						startActivity(intent);
-						
-					}
-				});
-				fax.setText(funcionario.getFax());
-				email.setText(funcionario.getEmail());
-				email.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {
+		
+							String numero = funcionarioSelecionado.getTelefone3().replace("(", "").replace(")", "");
+							
+							Intent intent = new Intent(Intent.ACTION_CALL);
+							intent.setData(Uri.parse("tel:" + numero));
+							startActivity(intent);
+							
+						}
+			});
+		}
+		if(funcionarioSelecionado.getFax() != null && !funcionarioSelecionado.getFax().isEmpty()){
+			llFax.setVisibility(View.VISIBLE);
+			fax.setText(funcionarioSelecionado.getFax());
+		}
+		
+		email.setText(funcionarioSelecionado.getEmail());
+		email.setOnClickListener(new View.OnClickListener() {
 					
 					@Override
 					public void onClick(View v) {
@@ -127,18 +177,26 @@ public class Funcionario extends Fragment {
 					}
 				});
 				
-				imgAlarm.setOnClickListener(new View.OnClickListener() {
+		imgAlarm.setOnClickListener(new View.OnClickListener() {
 					
 					@Override
 					public void onClick(View v) {
 							
-						  CustomDialog dialog = new CustomDialog(Funcionario.this.getActivity(), "Aniversário salvo",cargoSelecionado.getPoder());
-						  dialog.show();
+//				    	Calendar c = Calendar.getInstance();
+//				    	c.set(new DateTime().getYear(), dt.getMonthOfYear(), dt.getDayOfMonth());
+//				    	c.set(Calendar.HOUR_OF_DAY, 0);
+//				    	c.set(Calendar.MINUTE, 0);
+//				    	c.set(Calendar.SECOND, 0);
+//				    	// Ask our service to set an alarm for that date, this activity talks to the client that talks to the service
+//				    	scheduleClient.setAlarmForNotification(c);
+						
+						CustomDialog dialog = new CustomDialog(Funcionario.this.getActivity(), "Anivers√°rio salvo",funcionarioSelecionado.getPoder().getCor());
+						dialog.show();
 						
 					}
 				});
 					
-				imgAdd.setOnClickListener(new View.OnClickListener() {
+		imgAdd.setOnClickListener(new View.OnClickListener() {
 
 					@Override
 					public void onClick(View v) {
@@ -146,23 +204,31 @@ public class Funcionario extends Fragment {
 						Intent addContactIntent = new Intent(Contacts.Intents.Insert.ACTION, Contacts.People.CONTENT_URI);
 						addContactIntent.putExtra(Contacts.Intents.Insert.NAME, nome.getText()); 
 						addContactIntent.putExtra(Contacts.Intents.Insert.EMAIL, email.getText());
-						addContactIntent.putExtra(Contacts.Intents.Insert.PHONE, telefone.getText());
-						addContactIntent.putExtra(Contacts.Intents.Insert.PHONE_ISPRIMARY, "1");
+						if(llTelefone1.getVisibility() == View.VISIBLE){
+							addContactIntent.putExtra(Contacts.Intents.Insert.PHONE, telefone1.getText());
+							addContactIntent.putExtra(Contacts.Intents.Insert.PHONE_ISPRIMARY, "1");
+						}
+						if(llTelefone2.getVisibility() == View.VISIBLE){
+							addContactIntent.putExtra(Contacts.Intents.Insert.PHONE, telefone2.getText());
+						}
+						if(llTelefone3.getVisibility() == View.VISIBLE){
+							addContactIntent.putExtra(Contacts.Intents.Insert.PHONE, telefone3.getText());
+						}
 						startActivity(addContactIntent);
 						
 					}
 				});
-				
-				mainLayout.addView(tempView);
-				
-			}
-		}
 
+		if(funcionarioSelecionado.getComplemento() != null && !funcionarioSelecionado.getComplemento().isEmpty()){
+			llSala.setVisibility(View.VISIBLE);
+			sala.setText(funcionarioSelecionado.getComplemento());
+		}
+		
 		setHasOptionsMenu(true);
 		
 		actionBar = ((ActionBarActivity)Funcionario.this.getActivity()).getSupportActionBar();
 		if(cargoSelecionado != null)
-			actionBar.setTitle(cargoSelecionado.getCargo());
+			actionBar.setTitle(cargoSelecionado.getNome());
 		else
 			actionBar.setTitle(funcionarioSelecionado.getNome());
 		
@@ -179,19 +245,5 @@ public class Funcionario extends Fragment {
 		super.onCreateOptionsMenu(menu, inflater);
 	
 	}	
-	
-	private int lineColor(String poder){
-		
-		if(poder.equalsIgnoreCase("Poder Executivo")){
-			return view.getResources().getColor(R.color.yellow);
-		}else if(poder.equalsIgnoreCase("Poder Legislativo")){
-			return view.getResources().getColor(R.color.green);
-		}else if(poder.equalsIgnoreCase("Poder Judiciário")){
-			return view.getResources().getColor(R.color.red);
-		}else{
-			return view.getResources().getColor(R.color.blue_light);
-		}
-		
-	}
 }
 

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Locale;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +20,12 @@ public class ListAdapterFuncionario extends BaseAdapter {
 	private List<Funcionario> lista;
 	private static LayoutInflater inflater = null;
 	private View view;
+	private String cor;
 	private ArrayList<Funcionario> arraylist;
 	
-	public ListAdapterFuncionario(Context context, List<Funcionario> lista) {
+	public ListAdapterFuncionario(Context context, List<Funcionario> lista,String cor) {
 		this.lista = lista;
+		this.cor = cor;
 		inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		this.arraylist = new ArrayList<Funcionario>();
         this.arraylist.addAll(lista);
@@ -73,23 +76,9 @@ public class ListAdapterFuncionario extends BaseAdapter {
         }
        
 		 holder.texto.setText(lista.get(position).getNome());
-		 holder.line.setBackgroundColor(lineColor(lista.get(position).getPoder()));
+		 holder.line.setBackgroundColor(Color.parseColor("#" + this.cor));
 		 
         return view;
-		
-	}
-	
-	private int lineColor(String poder){
-		
-		if(poder.equalsIgnoreCase("Poder Executivo")){
-			return view.getResources().getColor(R.color.yellow);
-		}else if(poder.equalsIgnoreCase("Poder Legislativo")){
-			return view.getResources().getColor(R.color.green);
-		}else if(poder.equalsIgnoreCase("Poder Judici‡rio")){
-			return view.getResources().getColor(R.color.red);
-		}else{
-			return view.getResources().getColor(R.color.blue_light);
-		}
 		
 	}
 	
@@ -102,11 +91,11 @@ public class ListAdapterFuncionario extends BaseAdapter {
         }
         else
         {
-            for (Funcionario ar : arraylist)
+            for (Funcionario f : arraylist)
             {
-                if (ar.getNome().toLowerCase(Locale.getDefault()).contains(charText))
+                if (f.getNome().toLowerCase(Locale.getDefault()).contains(charText))
                 {
-                	lista.add(ar);
+                	lista.add(f);
                 }
             }
         }

@@ -4,16 +4,15 @@ import java.io.Serializable;
 import java.util.List;
 
 
-
 public class Cargo implements Serializable{
 
 	private static final long serialVersionUID = 4011667352070275133L;
 
 	private int id;
 	
-	private String cargo;
+	private String nome;
 	
-	private String poder;
+	private Poder poder;
 	
 	private List<Funcionario> funcionarios;
 
@@ -25,14 +24,6 @@ public class Cargo implements Serializable{
 		this.id = id;
 	}
 
-	public String getCargo() {
-		return cargo;
-	}
-
-	public void setCargo(String cargo) {
-		this.cargo = cargo;
-	}
-
 	public List<Funcionario> getFuncionarios() {
 		return funcionarios;
 	}
@@ -41,11 +32,19 @@ public class Cargo implements Serializable{
 		this.funcionarios = funcionarios;
 	}
 
-	public String getPoder() {
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public Poder getPoder() {
 		return poder;
 	}
 
-	public void setPoder(String poder) {
+	public void setPoder(Poder poder) {
 		this.poder = poder;
 	}
 

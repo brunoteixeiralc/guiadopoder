@@ -7,10 +7,10 @@
     
     <style name="MyActionBar"
            parent="@style/Widget.AppCompat.ActionBar" tools:targetApi="14">
-        <item name="android:background">@color/gray</item>
+        <item name="android:background">@color/white</item>
         <item name="android:titleTextStyle">@style/TitleTextStyle</item>
         <!-- Support library compatibility -->
-        <item name="background">@color/gray</item>
+        <item name="background">@color/white</item>
         <item name="titleTextStyle">@style/TitleTextStyle</item>
     </style>
     

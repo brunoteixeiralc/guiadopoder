@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/white">
 	
       <LinearLayout
         android:id="@+id/headerLayout"
@@ -103,5 +104,23 @@
 		    android:layout_marginLeft="10dp"/>
 		
 	 </LinearLayout>
-
+	
+     <LinearLayout
+         android:id="@+id/llAbout"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:orientation="horizontal"
+         tools:ignore="UseCompoundDrawables"
+         android:layout_alignParentBottom="true"
+         android:layout_marginTop="110dp">
+     
+     <ImageView
+		     android:id="@+id/logo_about"
+		     android:layout_width="wrap_content"
+		     android:layout_height="wrap_content"
+		     tools:ignore="ContentDescription"
+		     android:src="@drawable/logo_vector_about" />
+     
+     </LinearLayout>
+     
 </RelativeLayout>

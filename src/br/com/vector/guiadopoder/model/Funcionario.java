@@ -1,7 +1,6 @@
 package br.com.vector.guiadopoder.model;
 
 import java.io.Serializable;
-import java.util.List;
 
 
 public class Funcionario implements Serializable{
@@ -19,9 +18,15 @@ public class Funcionario implements Serializable{
 	
 	private String fax;
 	
-	private List<String> telefones;
+	private String telefone;
 	
-	private String poder;
+	private String telefone2;
+	
+	private String telefone3;
+	
+	private String complemento;
+	
+	private Poder poder;
 
 	public int getId() {
 		return id;
@@ -62,20 +67,44 @@ public class Funcionario implements Serializable{
 	public void setFax(String fax) {
 		this.fax = fax;
 	}
-
-	public List<String> getTelefones() {
-		return telefones;
+	
+	public String getTelefone() {
+		return telefone;
 	}
 
-	public void setTelefones(List<String> telefones) {
-		this.telefones = telefones;
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
 	}
 
-	public String getPoder() {
+	public String getTelefone2() {
+		return telefone2;
+	}
+
+	public void setTelefone2(String telefone2) {
+		this.telefone2 = telefone2;
+	}
+
+	public String getTelefone3() {
+		return telefone3;
+	}
+
+	public void setTelefone3(String telefone3) {
+		this.telefone3 = telefone3;
+	}
+
+	public String getComplemento() {
+		return complemento;
+	}
+
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
+	}
+
+	public Poder getPoder() {
 		return poder;
 	}
 
-	public void setPoder(String poder) {
+	public void setPoder(Poder poder) {
 		this.poder = poder;
 	}
 	

@@ -4,22 +4,28 @@ public class DrawerItem {
 
 	String ItemName;
 	String title;
-	private String searchText;
+	String searchText;
 	int imgResID;
+	int imgResLogoAbout;
+	String color;
 
-	public DrawerItem(String itemName, int imgResID) {
+	public DrawerItem(String itemName, int imgResID,String color) {
 		ItemName = itemName;
 		this.imgResID = imgResID;
+		this.color = color;
 	}
 
 	public DrawerItem(String title) {
-		this(null, 0);
 		this.title = title;
 	}
 	
 	public DrawerItem(int imgResID,String searchText){
 		this.searchText = searchText;
 		this.imgResID = imgResID;
+	}
+	
+	public DrawerItem(int imgResLogoAbout) {
+		this.imgResLogoAbout = imgResLogoAbout;
 	}
 
 	public String getItemName() {
@@ -52,5 +58,21 @@ public class DrawerItem {
 
 	public void setSearchText(String searchText) {
 		this.searchText = searchText;
+	}
+
+	public int getImgResLogoAbout() {
+		return imgResLogoAbout;
+	}
+
+	public void setImgResLogoAbout(int imgResLogoAbout) {
+		this.imgResLogoAbout = imgResLogoAbout;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
 	}
 }

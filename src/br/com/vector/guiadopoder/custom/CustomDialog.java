@@ -2,6 +2,7 @@ package br.com.vector.guiadopoder.custom;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -16,12 +17,12 @@ public class CustomDialog extends Dialog {
 	private TextView textView;
 	private ImageView btnOk;
 	private View line;
-	private String poder;
+	private String cor;
 	
-	public CustomDialog(Context context,String text,String poder) {
+	public CustomDialog(Context context,String text,String cor) {
 		super(context);
 		this.text = text;
-		this.poder = poder;
+		this.cor = cor;
 	}
 
 	@Override
@@ -30,7 +31,7 @@ public class CustomDialog extends Dialog {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.custom_dialog);
 		line = this.findViewById(R.id.line);
-		line.setBackgroundColor(lineColor(poder));
+		line.setBackgroundColor(Color.parseColor("#" + this.cor));
 		textView = (TextView) this.findViewById(R.id.txtDialog);	
 		textView.setText(text);
 		btnOk = (ImageView) this.findViewById(R.id.btnOK);
@@ -43,19 +44,5 @@ public class CustomDialog extends Dialog {
 			}
 		});
 
-	}
-	
-	private int lineColor(String poder){
-		
-		if(poder.equalsIgnoreCase("Poder Executivo")){
-			return CustomDialog.this.getContext().getResources().getColor(R.color.yellow);
-		}else if(poder.equalsIgnoreCase("Poder Legislativo")){
-			return CustomDialog.this.getContext().getResources().getColor(R.color.green);
-		}else if(poder.equalsIgnoreCase("Poder Judici‡rio")){
-			return CustomDialog.this.getContext().getResources().getColor(R.color.red);
-		}else{
-			return CustomDialog.this.getContext().getResources().getColor(R.color.blue_light);
-		}
-		
 	}
 }
