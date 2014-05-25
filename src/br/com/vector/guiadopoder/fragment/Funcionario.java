@@ -68,8 +68,8 @@ public class Funcionario extends Fragment {
 		view = inflater.inflate(R.layout.funcionario, container, false);  
 		
 	    // Create a new service client and bind our activity to this service
-        scheduleClient = new br.com.vector.guiadopoder.notification.ScheduleClient(Funcionario.this.getActivity());
-        scheduleClient.doBindService();
+        //scheduleClient = new br.com.vector.guiadopoder.notification.ScheduleClient(Funcionario.this.getActivity());
+        //scheduleClient.doBindService();
 		
 		funcionarioSelecionado = (br.com.vector.guiadopoder.model.Funcionario) getArguments().get("funcionario");
 		
