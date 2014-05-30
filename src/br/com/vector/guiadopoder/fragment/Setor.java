@@ -1,5 +1,7 @@
 package br.com.vector.guiadopoder.fragment;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Locale;
 
 import android.content.Context;
@@ -41,6 +43,7 @@ public class Setor extends Fragment {
 	private Poder poderSelecionado;
 	private Fragment fragment;
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -79,6 +82,17 @@ public class Setor extends Fragment {
 		});
 		
 		if(poderSelecionado.getSetores() != null && poderSelecionado.getSetores().size() > 0){
+			
+			Collections.sort(poderSelecionado.getSetores(),new Comparator() {
+
+				@Override
+				public int compare(Object o1, Object o2) {
+					br.com.vector.guiadopoder.model.Setor p1 = (br.com.vector.guiadopoder.model.Setor) o1;
+					br.com.vector.guiadopoder.model.Setor p2 = (br.com.vector.guiadopoder.model.Setor) o2;
+			        return p1.getNome().compareToIgnoreCase(p2.getNome());
+				}
+			});
+			
 			adapter = new ListAdapterSetor(Setor.this.getActivity(), poderSelecionado.getSetores(), poderSelecionado.getCor());
 			listaView.setAdapter(adapter);
 		}
@@ -137,10 +151,12 @@ public class Setor extends Fragment {
 	        }
 			@Override
 			public void afterTextChanged(Editable s) {
-
+			
 	            String text = editsearch.getText().toString()
 	                    .toLowerCase(Locale.getDefault());
-	            adapter.filter(text);
+	            
+	            if(adapter != null)
+	            	adapter.filter(text);
 				
 			}
 	 

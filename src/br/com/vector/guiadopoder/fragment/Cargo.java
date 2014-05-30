@@ -1,5 +1,7 @@
 package br.com.vector.guiadopoder.fragment;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Locale;
 
 import android.content.Context;
@@ -51,6 +53,7 @@ public class Cargo extends Fragment {
 	private TextView site;
 	private Fragment fragment;
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -92,19 +95,23 @@ public class Cargo extends Fragment {
 		llSite.setVisibility(View.VISIBLE);
 		
 		site = (TextView) view.findViewById(R.id.site);
-		site.setText(orgaoSelecionado.getSite());
-		site.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
+		if(!orgaoSelecionado.getSite().isEmpty()){
+			site.setText(orgaoSelecionado.getSite());
+			site.setOnClickListener(new View.OnClickListener() {
 				
-				Uri uri = Uri.parse(orgaoSelecionado.getSite());
-				Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-				startActivity(intent);
-				
-			}
-		});
-		
+				@Override
+				public void onClick(View v) {
+					
+					Uri uri = Uri.parse(orgaoSelecionado.getSite());
+					Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+					startActivity(intent);
+					
+				}
+			});
+		}else{
+			site.setText("-");
+		}
+
 		setHasOptionsMenu(true);
 		
 		actionBar = ((ActionBarActivity)Cargo.this.getActivity()).getSupportActionBar();
@@ -132,6 +139,16 @@ public class Cargo extends Fragment {
 				
 			}
 			
+		});
+		
+		Collections.sort(orgaoSelecionado.getCargos(),new Comparator() {
+
+			@Override
+			public int compare(Object o1, Object o2) {
+				br.com.vector.guiadopoder.model.Cargo p1 = (br.com.vector.guiadopoder.model.Cargo) o1;
+				br.com.vector.guiadopoder.model.Cargo p2 = (br.com.vector.guiadopoder.model.Cargo) o2;
+		        return p1.getNome().compareToIgnoreCase(p2.getNome());
+			}
 		});
 		
 		adapter = new ListAdapterCargo(Cargo.this.getActivity(), orgaoSelecionado.getCargos(),orgaoSelecionado.getPoder().getCor());
@@ -193,7 +210,8 @@ public class Cargo extends Fragment {
 
 	            String text = editsearch.getText().toString()
 	                    .toLowerCase(Locale.getDefault());
-	            adapter.filter(text);
+	            if(adapter != null)
+	            	adapter.filter(text);
 				
 			}
 	 

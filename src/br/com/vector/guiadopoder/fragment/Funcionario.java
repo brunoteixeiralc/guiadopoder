@@ -1,7 +1,6 @@
 package br.com.vector.guiadopoder.fragment;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import org.joda.time.DateTime;
@@ -25,15 +24,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import br.com.vector.guiadopoder.custom.CustomDialog;
 import br.com.vector.guiadopoder.model.Cargo;
+
 import com.example.guiadopoder.R;
 
 
 @SuppressLint("HandlerLeak")@SuppressWarnings({ "unused", "deprecation" })
-public class Funcionario extends Fragment {
+public class Funcionario extends Fragment{
 	
 	private View view;
 	private ActionBar actionBar;
@@ -104,7 +103,6 @@ public class Funcionario extends Fragment {
 		aniversario.setText(dataFormatada);
 		
 		if(funcionarioSelecionado.getTelefone() != null && !funcionarioSelecionado.getTelefone().isEmpty()){
-			llTelefone1.setVisibility(View.VISIBLE);
 			telefone1.setText(funcionarioSelecionado.getTelefone());
 			telefone1.setOnClickListener(new View.OnClickListener() {
 						
@@ -119,10 +117,11 @@ public class Funcionario extends Fragment {
 							
 						}
 			});
+		}else{
+			telefone1.setText("-");
 		}
 		
 		if(funcionarioSelecionado.getTelefone2() != null && !funcionarioSelecionado.getTelefone2().isEmpty()){
-			llTelefone2.setVisibility(View.VISIBLE);
 			telefone2.setText(funcionarioSelecionado.getTelefone2());
 			telefone2.setOnClickListener(new View.OnClickListener() {
 						
@@ -137,10 +136,11 @@ public class Funcionario extends Fragment {
 							
 						}
 			});
+		}else{
+			telefone2.setText("-");
 		}
 		
 		if(funcionarioSelecionado.getTelefone3() != null && !funcionarioSelecionado.getTelefone3().isEmpty()){
-			llTelefone3.setVisibility(View.VISIBLE);
 			telefone3.setText(funcionarioSelecionado.getTelefone3());
 			telefone3.setOnClickListener(new View.OnClickListener() {
 						
@@ -155,10 +155,14 @@ public class Funcionario extends Fragment {
 							
 						}
 			});
+		}else{
+			telefone3.setText("-");
 		}
+		
 		if(funcionarioSelecionado.getFax() != null && !funcionarioSelecionado.getFax().isEmpty()){
-			llFax.setVisibility(View.VISIBLE);
 			fax.setText(funcionarioSelecionado.getFax());
+		}else{
+			fax.setText("-");
 		}
 		
 		email.setText(funcionarioSelecionado.getEmail());
@@ -220,8 +224,9 @@ public class Funcionario extends Fragment {
 				});
 
 		if(funcionarioSelecionado.getComplemento() != null && !funcionarioSelecionado.getComplemento().isEmpty()){
-			llSala.setVisibility(View.VISIBLE);
 			sala.setText(funcionarioSelecionado.getComplemento());
+		}else{
+			sala.setText("-");
 		}
 		
 		setHasOptionsMenu(true);
@@ -244,6 +249,7 @@ public class Funcionario extends Fragment {
 	     
 		super.onCreateOptionsMenu(menu, inflater);
 	
-	}	
+	}
+
 }
 

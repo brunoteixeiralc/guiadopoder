@@ -1,5 +1,7 @@
 package br.com.vector.guiadopoder.fragment;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Locale;
 
 import android.content.Context;
@@ -40,8 +42,10 @@ public class FuncionarioList extends Fragment {
 	private ListView listaView;
 	private EditText editsearch;
 	private Fragment fragment;
+	
 	private br.com.vector.guiadopoder.model.Cargo cargoSelecionado;
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -80,10 +84,22 @@ public class FuncionarioList extends Fragment {
 		});
 		
 		if(cargoSelecionado.getFuncionarios() != null && cargoSelecionado.getFuncionarios().size() > 0){
+
+			Collections.sort(cargoSelecionado.getFuncionarios(),new Comparator() {
+
+				@Override
+				public int compare(Object o1, Object o2) {
+					 Funcionario p1 = (Funcionario) o1;
+					 Funcionario p2 = (Funcionario) o2;
+			         return p1.getNome().compareToIgnoreCase(p2.getNome());
+				}
+			});
+			
 			adapter = new ListAdapterFuncionario(FuncionarioList.this.getActivity(), cargoSelecionado.getFuncionarios(), cargoSelecionado.getPoder().getCor());
+			
 			listaView.setAdapter(adapter);
 		}
-		
+
 		return view;
 		
 		
@@ -141,7 +157,8 @@ public class FuncionarioList extends Fragment {
 
 	            String text = editsearch.getText().toString()
 	                    .toLowerCase(Locale.getDefault());
-	            adapter.filter(text);
+	            if(adapter != null)
+	            	adapter.filter(text);
 				
 			}
 	 

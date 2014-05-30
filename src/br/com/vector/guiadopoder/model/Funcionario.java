@@ -107,6 +107,8 @@ public class Funcionario implements Serializable{
 	public void setPoder(Poder poder) {
 		this.poder = poder;
 	}
+
+	
 	
 	
 	

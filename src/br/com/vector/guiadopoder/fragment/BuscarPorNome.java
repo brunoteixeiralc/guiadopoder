@@ -1,5 +1,7 @@
 package br.com.vector.guiadopoder.fragment;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
@@ -41,7 +43,7 @@ public class BuscarPorNome extends Fragment {
 	private Fragment fragment;
 	private List<Funcionario> listFuncionario;
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -77,8 +79,19 @@ public class BuscarPorNome extends Fragment {
 			}
 			
 		});
+		
+		Collections.sort(listFuncionario,new Comparator() {
 
+			@Override
+			public int compare(Object o1, Object o2) {
+				 Funcionario p1 = (Funcionario) o1;
+				 Funcionario p2 = (Funcionario) o2;
+		         return p1.getNome().compareToIgnoreCase(p2.getNome());
+			}
+		});
+		
 		adapter = new ListAdapterFuncionarioBuscar(BuscarPorNome.this.getActivity(), listFuncionario);
+		
 		listaView.setAdapter(adapter);
 	
 		return view;
@@ -137,7 +150,8 @@ public class BuscarPorNome extends Fragment {
 
 	            String text = editsearch.getText().toString()
 	                    .toLowerCase(Locale.getDefault());
-	            adapter.filter(text);
+	            if(adapter != null)
+	            	adapter.filter(text);
 				
 			}
 	 

@@ -1,5 +1,7 @@
 package br.com.vector.guiadopoder.fragment;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Locale;
 
 import android.content.Context;
@@ -42,6 +44,7 @@ public class Orgao extends Fragment {
 	private Fragment fragment;
 
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -79,6 +82,17 @@ public class Orgao extends Fragment {
 		});
 		
 		if(setorSelecionado.getOrgaos() != null && setorSelecionado.getOrgaos().size() > 0){
+
+			Collections.sort(setorSelecionado.getOrgaos(),new Comparator() {
+
+				@Override
+				public int compare(Object o1, Object o2) {
+					br.com.vector.guiadopoder.model.Orgao p1 = (br.com.vector.guiadopoder.model.Orgao) o1;
+					br.com.vector.guiadopoder.model.Orgao p2 = (br.com.vector.guiadopoder.model.Orgao) o2;
+			        return p1.getNome().compareToIgnoreCase(p2.getNome());
+				}
+			});
+			
 			adapter = new ListAdapterOrgao(Orgao.this.getActivity(), setorSelecionado.getOrgaos(),setorSelecionado.getPoder().getCor());
 			listaView.setAdapter(adapter);
 		}
@@ -138,7 +152,8 @@ public class Orgao extends Fragment {
 
 	            String text = editsearch.getText().toString()
 	                    .toLowerCase(Locale.getDefault());
-	            adapter.filter(text);
+	            if(adapter != null)
+	            	adapter.filter(text);
 				
 			}
 	 

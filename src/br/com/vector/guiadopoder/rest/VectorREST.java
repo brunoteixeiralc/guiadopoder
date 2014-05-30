@@ -13,8 +13,9 @@ public class VectorREST {
 
 	public List<Poder> getListaVector() throws Exception {
 
-		String URL_WS = "http://54.207.91.46:8080/Vector/REST/";
+		//String URL_WS = "http://54.207.91.46:8080/Vector/REST/poder";
 		
+		 String URL_WS = "http://ec2-54-207-116-160.sa-east-1.compute.amazonaws.com:8080/VectorTest/REST/";
 	     String[] resposta = new WebServiceVector().get(URL_WS + "poder");
 	     
 	     if (resposta[0].equals("200")) {

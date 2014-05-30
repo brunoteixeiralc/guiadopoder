@@ -8,7 +8,7 @@
     
 	<View 
 	     android:layout_width="10dp"
-	     android:layout_height="250dp"
+	     android:layout_height="300dp"
 	     android:background="@color/blue"
 	     android:id="@+id/line"
 	     android:layout_gravity="left"
@@ -112,8 +112,7 @@
 	        android:layout_marginBottom="8dp"
 	        android:orientation="horizontal"
 	        android:layout_gravity="left"
-	        tools:ignore="UseCompoundDrawables" 
-	        android:visibility="gone">
+	        tools:ignore="UseCompoundDrawables" >
 	    
 		    <ImageView
 		        android:id="@+id/imgNumero"
@@ -144,8 +143,7 @@
 	        android:layout_marginBottom="8dp"
 	        android:orientation="horizontal"
 	        android:layout_gravity="left"
-	        tools:ignore="UseCompoundDrawables"
-	        android:visibility="gone" >
+	        tools:ignore="UseCompoundDrawables" >
 	    
 		    <ImageView
 		        android:id="@+id/imgNumero2"
@@ -176,8 +174,7 @@
 	        android:layout_marginBottom="8dp"
 	        android:orientation="horizontal"
 	        android:layout_gravity="left"
-	        tools:ignore="UseCompoundDrawables"
-	        android:visibility="gone" >
+	        tools:ignore="UseCompoundDrawables">
 	    
 		    <ImageView
 		        android:id="@+id/imgNumero3"
@@ -208,8 +205,7 @@
 	        android:layout_marginBottom="8dp"
 	        android:orientation="horizontal"
 	        android:layout_gravity="left"
-	        tools:ignore="UseCompoundDrawables"
-	        android:visibility="gone" >
+	        tools:ignore="UseCompoundDrawables" >
 	    
 		    <ImageView
 		        android:id="@+id/imgFax"
@@ -271,8 +267,7 @@
 	        android:layout_marginBottom="8dp"
 	        android:orientation="horizontal"
 	        android:layout_gravity="left"
-	        tools:ignore="UseCompoundDrawables"
-	        android:visibility="gone" >
+	        tools:ignore="UseCompoundDrawables">
 	    
 		    <ImageView
 		        android:id="@+id/imgSala"
